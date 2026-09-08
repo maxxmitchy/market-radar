@@ -26,6 +26,7 @@ interface RadarResponse {
       price: number;
       location?: string;
       condition?: string;
+      source?: string;
       url?: string;
     };
     valuation: {
@@ -95,7 +96,7 @@ export async function scanRadar(params: {
       reasons: item.reasons,
       location: item.listing.location ?? "Unknown location",
       condition: item.listing.condition ?? "Condition not provided",
-      source: data.source,
+      source: item.listing.source ?? data.source,
       url: item.listing.url,
     })),
   };
