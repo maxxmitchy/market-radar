@@ -1,0 +1,6 @@
+{
+  "name": "Market Radar",
+  "description": "A comprehensive market analysis and tracking application.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
