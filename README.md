@@ -1,11 +1,56 @@
-<div align="center">
+# Market Radar
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+Marketplace intelligence engine for discovering, scoring, and monitoring resale opportunities.
 
-  <h1>Built with AI Studio</h2>
+## What we're building
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+Market Radar turns marketplace listings into ranked opportunities. The core is provider-neutral:
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+`marketplace source → normalized listings → comparable valuation → opportunity score`
 
-</div>
+The first milestone is **read-only intelligence**. No seller messaging, purchasing, or listing creation is part of the core.
+
+## Current state
+
+- Provider-neutral `MarketplaceConnector` interface
+- Normalized `MarketplaceListing` domain model
+- Explainable comparable-median valuation baseline
+- Deterministic opportunity scoring with resale-cost and risk adjustments
+- Mock connector for development without a live marketplace
+- Facebook Marketplace connector using an explicitly supplied authenticated session
+- Rate limiting and configurable Facebook GraphQL operation ID
+- `findDeals()` pipeline that ranks returned listings
+
+## Facebook connector
+
+The Facebook connector is isolated under `src/connectors/facebook/`. It does not contain account credentials or browser-cookie extraction. Supply an authenticated session explicitly at runtime.
+
+Facebook's internal Marketplace protocol is undocumented and can change. Operation IDs may rotate, and use of automated access may be restricted by Facebook's terms. Keep usage read-only, low-rate, and limited to accounts you are authorized to use.
+
+## Development
+
+Requirements: Node.js 20+
+
+```bash
+npm install
+npm run build
+npm test
+```
+
+## Architecture
+
+```text
+Marketplace source
+        ↓
+   Connector
+        ↓
+Normalized listing
+        ↓
+Comparable valuation
+        ↓
+ Opportunity score
+        ↓
+ Ranked opportunities
+```
+
+See [`docs/architecture.md`](docs/architecture.md) and [`docs/product.md`](docs/product.md) for the current design and product direction.
