@@ -3,11 +3,17 @@ export interface RadarOpportunity {
   title: string;
   price: number;
   estimatedValue: number;
+  spreadAmount: number;
   spreadPercent: number;
   score: number;
   risk: "low" | "medium" | "high";
+  confidence: number;
+  valuationMethod: string;
+  reasons: string[];
   location: string;
   condition: string;
+  source: string;
+  url?: string;
 }
 
 interface RadarResponse {
@@ -20,11 +26,18 @@ interface RadarResponse {
       price: number;
       location?: string;
       condition?: string;
+      url?: string;
     };
-    valuation: { estimatedValue: number };
+    valuation: {
+      estimatedValue: number;
+      confidence: number;
+      method: string;
+    };
+    spreadAmount: number;
     spreadPercent: number;
     score: number;
     risk: "low" | "medium" | "high";
+    reasons: string[];
   }>;
 }
 
@@ -47,10 +60,16 @@ export async function scanRadar(params: {
     title: item.listing.title,
     price: item.listing.price,
     estimatedValue: item.valuation.estimatedValue,
+    spreadAmount: item.spreadAmount,
     spreadPercent: item.spreadPercent,
     score: item.score,
     risk: item.risk,
+    confidence: item.valuation.confidence,
+    valuationMethod: item.valuation.method,
+    reasons: item.reasons,
     location: item.listing.location ?? "Unknown location",
     condition: item.listing.condition ?? "Condition not provided",
+    source: data.source,
+    url: item.listing.url,
   }));
 }
