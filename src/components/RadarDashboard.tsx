@@ -9,6 +9,7 @@ export function RadarDashboard() {
   const [minScore, setMinScore] = useState(0);
   const [location, setLocation] = useState("Lagos, Nigeria");
   const [opportunities, setOpportunities] = useState<RadarOpportunity[]>([]);
+  const [source, setSource] = useState("unknown");
   const [selected, setSelected] = useState<RadarOpportunity | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -17,7 +18,9 @@ export function RadarDashboard() {
     setLoading(true);
     setError(null);
     try {
-      setOpportunities(await scanRadar({ query, minScore }));
+      const result = await scanRadar({ query, minScore });
+      setSource(result.source);
+      setOpportunities(result.opportunities);
     } catch (scanError) {
       console.error(scanError);
       setError("The radar could not complete this scan. Check the API and try again.");
@@ -78,7 +81,7 @@ export function RadarDashboard() {
               {loading ? "Scanning" : "Scan"}
             </button>
           </div>
-          <p className="mt-3 px-1 text-xs text-slate-400">Current radar provider: development intelligence feed · {location}</p>
+          <p className="mt-3 px-1 text-xs text-slate-400">Radar provider: <span className="font-semibold text-slate-500">{source}</span> · {location}</p>
         </section>
 
         <div className="mb-4 mt-10 flex items-center justify-between">
