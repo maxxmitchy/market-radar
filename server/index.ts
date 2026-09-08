@@ -40,18 +40,25 @@ app.get("/api/health", (_req, res) => {
 
 app.get("/api/opportunities", async (req, res) => {
   if (!provider.configured) {
-    res.status(503).json({ error: "The selected marketplace provider is not configured." });
+    res.status(503).json({
+      error: "The selected marketplace provider is not configured. Add GEMINI_API_KEY in the app secrets or select a configured provider.",
+      code: "PROVIDER_NOT_CONFIGURED",
+    });
     return;
   }
 
   try {
     const query = typeof req.query.query === "string" ? req.query.query : "";
+    const location = typeof req.query.location === "string" && req.query.location.trim()
+      ? req.query.location.trim()
+      : "Lagos, Nigeria";
     const minScore = Number(req.query.minScore ?? 0);
     const limit = Number(req.query.limit ?? 20);
 
     const opportunities = await findDeals(provider.connector, {
       search: {
         query,
+        location,
         latitude: Number(req.query.latitude ?? 6.5244),
         longitude: Number(req.query.longitude ?? 3.3792),
         radiusKm: Number(req.query.radiusKm ?? 50),
@@ -67,7 +74,12 @@ app.get("/api/opportunities", async (req, res) => {
     });
   } catch (error) {
     console.error("Radar API error", error);
-    res.status(500).json({ error: "Unable to scan marketplace inventory." });
+    const message = error instanceof Error ? error.message : "Unknown provider error";
+    res.status(502).json({
+      error: "The live marketplace provider could not complete the scan.",
+      code: "PROVIDER_SCAN_FAILED",
+      detail: message.slice(0, 240),
+    });
   }
 });
 

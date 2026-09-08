@@ -18,12 +18,12 @@ export function RadarDashboard() {
     setLoading(true);
     setError(null);
     try {
-      const result = await scanRadar({ query, minScore });
+      const result = await scanRadar({ query, location, minScore });
       setSource(result.source);
       setOpportunities(result.opportunities);
     } catch (scanError) {
       console.error(scanError);
-      setError("The radar could not complete this scan. Check the API and try again.");
+      setError(scanError instanceof Error ? scanError.message : "The radar could not complete this scan.");
     } finally {
       setLoading(false);
     }

@@ -26,6 +26,7 @@ interface RadarResponse {
       price: number;
       location?: string;
       condition?: string;
+      source?: string;
       url?: string;
     };
     valuation: {
@@ -41,6 +42,12 @@ interface RadarResponse {
   }>;
 }
 
+interface RadarError {
+  error?: string;
+  code?: string;
+  detail?: string;
+}
+
 export interface RadarScan {
   source: string;
   generatedAt: string;
@@ -49,16 +56,27 @@ export interface RadarScan {
 
 export async function scanRadar(params: {
   query: string;
+  location: string;
   minScore: number;
 }): Promise<RadarScan> {
   const search = new URLSearchParams({
     query: params.query,
+    location: params.location,
     minScore: String(params.minScore),
     limit: "20",
   });
 
   const response = await fetch(`/api/opportunities?${search.toString()}`);
-  if (!response.ok) throw new Error("Radar scan failed.");
+  if (!response.ok) {
+    let detail = "Radar scan failed.";
+    try {
+      const body = (await response.json()) as RadarError;
+      detail = [body.error, body.detail].filter(Boolean).join(" ") || detail;
+    } catch {
+      // Keep the generic error when the server did not return JSON.
+    }
+    throw new Error(detail);
+  }
 
   const data = (await response.json()) as RadarResponse;
   return {
@@ -78,7 +96,7 @@ export async function scanRadar(params: {
       reasons: item.reasons,
       location: item.listing.location ?? "Unknown location",
       condition: item.listing.condition ?? "Condition not provided",
-      source: data.source,
+      source: item.listing.source ?? data.source,
       url: item.listing.url,
     })),
   };
