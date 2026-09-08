@@ -15,7 +15,7 @@ const facebookRuntime = createFacebookRuntime(process.env);
 const geminiApiKey = process.env.GEMINI_API_KEY?.trim();
 const geminiConfigured = Boolean(geminiApiKey);
 const geminiConnector = geminiConfigured ? new GeminiWebMarketplaceConnector(geminiApiKey!) : null;
-const selectedProvider = process.env.MARKET_RADAR_PROVIDER;
+const selectedProvider = process.env.MARKET_RADAR_PROVIDER ?? (geminiConfigured ? "gemini-web" : "mock");
 
 const provider = selectedProvider === "facebook"
   ? facebookRuntime
