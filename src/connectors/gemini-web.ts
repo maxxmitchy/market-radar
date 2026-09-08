@@ -61,7 +61,7 @@ export class GeminiWebMarketplaceConnector implements MarketplaceConnector {
     const capturedAt = new Date().toISOString();
 
     return (parsed.listings ?? []).filter((item) =>
-      item && Number.isFinite(item.price) && item.price > 0 && /^https?:\\/\\//i.test(item.url),
+      item && Number.isFinite(item.price) && item.price > 0 && /^https?:\/\//i.test(item.url),
     ).slice(0, limit).map((item, index) => ({
       id: `gemini-web-${index}-${this.hash(item.url)}`,
       source: item.source,

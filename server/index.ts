@@ -9,7 +9,7 @@ import { GeminiWebMarketplaceConnector } from "../src/connectors/gemini-web.js";
 import { findDeals } from "../src/intelligence/find-deals.js";
 
 const app = express();
-const port = Number(process.env.PORT ?? 3000);
+const port = 3000;
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const facebookRuntime = createFacebookRuntime(process.env);
 const geminiApiKey = process.env.GEMINI_API_KEY?.trim();
