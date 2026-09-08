@@ -2,6 +2,7 @@ import type { MarketplaceListing } from "../domain/listing.js";
 
 export interface ListingSearch {
   query: string;
+  location?: string;
   latitude: number;
   longitude: number;
   radiusKm?: number;
