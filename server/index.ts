@@ -1,26 +1,43 @@
+import "dotenv/config";
 import express from "express";
 import { createServer as createViteServer } from "vite";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { MockMarketplaceConnector } from "../src/connectors/mock.js";
+import { createFacebookRuntime } from "../src/connectors/facebook/runtime.js";
 import { findDeals } from "../src/intelligence/find-deals.js";
 
 const app = express();
 const port = Number(process.env.PORT ?? 3000);
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const connector = new MockMarketplaceConnector();
+const facebookRuntime = createFacebookRuntime(process.env);
+const provider = process.env.MARKET_RADAR_PROVIDER === "facebook" ? facebookRuntime : {
+  provider: "mock" as const,
+  connector: new MockMarketplaceConnector(),
+  configured: true,
+};
 
 app.get("/api/health", (_req, res) => {
-  res.json({ ok: true, service: "market-radar", provider: connector.name });
+  res.json({
+    ok: true,
+    service: "market-radar",
+    provider: provider.provider,
+    configured: provider.configured,
+  });
 });
 
 app.get("/api/opportunities", async (req, res) => {
+  if (!provider.configured) {
+    res.status(503).json({ error: "The selected marketplace provider is not configured." });
+    return;
+  }
+
   try {
     const query = typeof req.query.query === "string" ? req.query.query : "";
     const minScore = Number(req.query.minScore ?? 0);
     const limit = Number(req.query.limit ?? 20);
 
-    const opportunities = await findDeals(connector, {
+    const opportunities = await findDeals(provider.connector, {
       search: {
         query,
         latitude: Number(req.query.latitude ?? 6.5244),
@@ -32,7 +49,7 @@ app.get("/api/opportunities", async (req, res) => {
     });
 
     res.json({
-      source: connector.name,
+      source: provider.connector.name,
       generatedAt: new Date().toISOString(),
       opportunities,
     });
