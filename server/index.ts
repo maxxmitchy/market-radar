@@ -5,17 +5,29 @@ import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { MockMarketplaceConnector } from "../src/connectors/mock.js";
 import { createFacebookRuntime } from "../src/connectors/facebook/runtime.js";
+import { GeminiWebMarketplaceConnector } from "../src/connectors/gemini-web.js";
 import { findDeals } from "../src/intelligence/find-deals.js";
 
 const app = express();
 const port = Number(process.env.PORT ?? 3000);
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const facebookRuntime = createFacebookRuntime(process.env);
-const provider = process.env.MARKET_RADAR_PROVIDER === "facebook" ? facebookRuntime : {
-  provider: "mock" as const,
-  connector: new MockMarketplaceConnector(),
-  configured: true,
-};
+const geminiApiKey = process.env.GEMINI_API_KEY?.trim();
+const geminiConfigured = Boolean(geminiApiKey);
+const geminiConnector = geminiConfigured ? new GeminiWebMarketplaceConnector(geminiApiKey!) : null;
+const selectedProvider = process.env.MARKET_RADAR_PROVIDER;
+
+const provider = selectedProvider === "facebook"
+  ? facebookRuntime
+  : selectedProvider === "gemini-web" && geminiConnector
+    ? { provider: "gemini-web" as const, connector: geminiConnector, configured: true }
+    : selectedProvider === "gemini-web"
+      ? { provider: "gemini-web" as const, connector: new MockMarketplaceConnector(), configured: false }
+      : {
+          provider: "mock" as const,
+          connector: new MockMarketplaceConnector(),
+          configured: true,
+        };
 
 app.get("/api/health", (_req, res) => {
   res.json({
