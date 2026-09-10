@@ -1,0 +1,1 @@
+The regulatory layer is a founder-facing governance blueprint. Classification, intended use, claims, labeling, and approval remain pending accountable review.
