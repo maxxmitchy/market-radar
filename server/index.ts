@@ -9,6 +9,8 @@ import { GeminiWebMarketplaceConnector } from "../src/connectors/gemini-web.js";
 import { findDeals } from "../src/intelligence/find-deals.js";
 import { recommendStudentProgram } from "../src/intelligence/student-decision.js";
 import type { StudentProfile } from "../src/domain/student.js";
+import { formulationRegistry } from "../src/formulations/registry.js";
+import { isCommerciallyReady } from "../src/domain/formulation.js";
 
 const app = express();
 const port = 3000;
@@ -65,6 +67,24 @@ app.post("/api/student/recommendation", (req, res) => {
   }
 
   res.json({ recommendation: recommendStudentProgram(profile as StudentProfile) });
+});
+
+app.get("/api/formulations", (_req, res) => {
+  res.json({
+    formulations: formulationRegistry.map((formulation) => ({
+      id: formulation.id,
+      version: formulation.version,
+      name: formulation.name,
+      status: formulation.status,
+      commerciallyReady: isCommerciallyReady(formulation),
+      gates: {
+        evidence: formulation.evidence.decision,
+        safety: formulation.safety.decision,
+        regulatory: formulation.regulatory.decision,
+        quality: formulation.quality.decision,
+      },
+    })),
+  });
 });
 
 app.get("/api/opportunities", async (req, res) => {
