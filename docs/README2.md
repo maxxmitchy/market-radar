@@ -1,0 +1,1 @@
+The lab is a design and architecture workspace for Careflux Student.
