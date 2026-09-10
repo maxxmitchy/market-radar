@@ -1,5 +1,6 @@
-import { CircleAlert, FlaskConical, GitBranch, ListChecks, ShieldCheck, X } from "lucide-react";
+import { CircleAlert, ClipboardCheck, FlaskConical, GitBranch, ListChecks, ShieldCheck, X } from "lucide-react";
 import { formulationRegistry } from "../formulations/registry.js";
+import { qualitySummary } from "../intelligence/quality-engine.js";
 import { requirementSummary } from "../intelligence/requirement-engine.js";
 
 const summary = requirementSummary();
@@ -20,26 +21,27 @@ const openQuestions = [
 
 export function LabDashboard({ onClose }: { onClose: () => void }) {
   const formulation = formulationRegistry[0];
+  const quality = qualitySummary();
   const total = summary.defined + summary.prototype + summary["needs-validation"] + summary.unresolved;
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-950/60 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Lab dashboard">
-      <div className="mx-auto flex h-full max-w-7xl flex-col overflow-hidden rounded-[2rem] border border-slate-200 bg-[#f6f7fb] shadow-2xl">
-        <header className="flex items-center justify-between border-b border-slate-200 bg-white px-6 py-5 lg:px-8">
+    <div className="fixed inset-0 z-50 bg-slate-950/60 p-3 backdrop-blur-sm sm:p-4" role="dialog" aria-modal="true" aria-label="Lab dashboard">
+      <div className="mx-auto flex h-full max-w-7xl flex-col overflow-hidden rounded-[1.5rem] border border-slate-200 bg-[#f6f7fb] shadow-2xl sm:rounded-[2rem]">
+        <header className="flex items-start justify-between gap-4 border-b border-slate-200 bg-white px-5 py-4 sm:px-6 sm:py-5 lg:px-8">
           <div>
             <div className="text-[10px] font-black tracking-[.18em] text-indigo-600">LAB STATUS</div>
-            <h2 className="mt-1 text-2xl font-black tracking-tight">Where the product stands</h2>
-            <p className="mt-1 text-sm text-slate-500">A working view of what is defined, prototyped, validated and still unresolved.</p>
+            <h2 className="mt-1 text-xl font-black tracking-tight sm:text-2xl">Where the product stands</h2>
+            <p className="mt-1 max-w-2xl text-sm leading-5 text-slate-500">A working view of what is defined, prototyped, validated and still unresolved.</p>
           </div>
-          <button onClick={onClose} className="rounded-xl border border-slate-200 p-2 hover:bg-slate-50" aria-label="Close"><X size={20} /></button>
+          <button onClick={onClose} className="shrink-0 rounded-xl border border-slate-200 p-2 hover:bg-slate-50" aria-label="Close"><X size={20} /></button>
         </header>
 
-        <main className="min-h-0 flex-1 overflow-y-auto p-6 lg:p-8">
+        <main className="min-h-0 flex-1 overflow-y-auto p-5 sm:p-6 lg:p-8">
           <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <Metric label="REQUIREMENTS" value={String(total)} detail={`${summary.defined} defined · ${summary.prototype} prototype`} />
             <Metric label="NEEDS VALIDATION" value={String(summary["needs-validation"])} detail="Requires explicit design work" />
             <Metric label="FORMULATIONS" value={String(formulationRegistry.length)} detail={`Current state: ${formulation.status}`} />
-            <Metric label="COMMERCIAL READY" value={formulationRegistry.some((item) => item.status === "approved") ? "YES" : "NO"} detail="Approval gates remain controlling" />
+            <Metric label="QUALITY GATE" value={quality.approved ? "OPEN" : "BLOCKED"} detail={`${quality.blocked} definition${quality.blocked === 1 ? "" : "s"} blocked`} />
           </section>
 
           <section className="mt-8">
@@ -60,10 +62,10 @@ export function LabDashboard({ onClose }: { onClose: () => void }) {
               <div className="mt-4 space-y-3">{openQuestions.map((question, index) => <div key={question} className="flex gap-3 rounded-xl border border-amber-200/70 bg-white/60 p-3"><span className="text-xs font-black text-amber-700">0{index + 1}</span><p className="text-sm font-semibold leading-6 text-amber-950">{question}</p></div>)}</div>
             </div>
             <div className="rounded-2xl border border-slate-200 bg-slate-950 p-6 text-white">
-              <div className="text-[10px] font-black tracking-[.18em] text-indigo-300">CURRENT CONTROL POINT</div>
+              <div className="flex items-center gap-2 text-indigo-300"><ClipboardCheck size={16} /><span className="text-[10px] font-black tracking-[.18em]">CURRENT CONTROL POINT</span></div>
               <h3 className="mt-3 text-2xl font-black">Nothing ships just because the concept is attractive.</h3>
               <p className="mt-3 text-sm leading-7 text-slate-300">Program approval, formulation governance, evidence, safety, regulatory and quality review remain separate from the interface. The lab keeps those controls visible while the product is being designed.</p>
-              <div className="mt-5 grid grid-cols-2 gap-2 text-xs font-bold"><div className="rounded-xl bg-white/10 p-3">FORMULATION<br /><span className="font-normal text-slate-400">{formulation.name}</span></div><div className="rounded-xl bg-white/10 p-3">STATE<br /><span className="font-normal text-slate-400">{formulation.status}</span></div></div>
+              <div className="mt-5 grid grid-cols-2 gap-2 text-xs font-bold"><div className="rounded-xl bg-white/10 p-3">FORMULATION<br /><span className="font-normal text-slate-400">{formulation.name}</span></div><div className="rounded-xl bg-white/10 p-3">QUALITY<br /><span className="font-normal text-slate-400">{quality.approved ? "approved" : "blocked"}</span></div></div>
             </div>
           </section>
         </main>
