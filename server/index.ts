@@ -7,6 +7,8 @@ import { MockMarketplaceConnector } from "../src/connectors/mock.js";
 import { createFacebookRuntime } from "../src/connectors/facebook/runtime.js";
 import { GeminiWebMarketplaceConnector } from "../src/connectors/gemini-web.js";
 import { findDeals } from "../src/intelligence/find-deals.js";
+import { recommendStudentProgram } from "../src/intelligence/student-decision.js";
+import type { StudentProfile } from "../src/domain/student.js";
 
 const app = express();
 const port = 3000;
@@ -29,13 +31,40 @@ const provider = selectedProvider === "facebook"
           configured: true,
         };
 
+app.use(express.json({ limit: "32kb" }));
+
 app.get("/api/health", (_req, res) => {
   res.json({
     ok: true,
-    service: "market-radar",
+    service: "careflux-student",
     provider: provider.provider,
     configured: provider.configured,
   });
+});
+
+app.post("/api/student/recommendation", (req, res) => {
+  const profile = req.body as Partial<StudentProfile>;
+
+  if (!profile || typeof profile !== "object") {
+    res.status(400).json({ error: "A student profile is required.", code: "INVALID_PROFILE" });
+    return;
+  }
+
+  const required = [
+    "academicStage",
+    "objective",
+    "duration",
+    "eatingRoutine",
+    "sleepQuality",
+    "pharmacistReviewRequested",
+  ] as const;
+
+  if (required.some((field) => profile[field] === undefined)) {
+    res.status(400).json({ error: "The student profile is incomplete.", code: "INCOMPLETE_PROFILE" });
+    return;
+  }
+
+  res.json({ recommendation: recommendStudentProgram(profile as StudentProfile) });
 });
 
 app.get("/api/opportunities", async (req, res) => {
@@ -99,7 +128,7 @@ async function start() {
   }
 
   app.listen(port, "0.0.0.0", () => {
-    console.log(`Market Radar running on http://localhost:${port}`);
+    console.log(`Careflux Student running on http://localhost:${port}`);
   });
 }
 
