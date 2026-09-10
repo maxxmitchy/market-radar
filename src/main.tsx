@@ -5,6 +5,7 @@ import { ArchitectureLedger } from './components/ArchitectureLedger.tsx';
 import { DailyExperiencePanel } from './components/DailyExperiencePanel.tsx';
 import { DecisionRulesPanel } from './components/DecisionRulesPanel.tsx';
 import { DecisionSimulator } from './components/DecisionSimulator.tsx';
+import { EvidenceClaimsPanel } from './components/EvidenceClaimsPanel.tsx';
 import { FormulationBlueprintPanel } from './components/FormulationBlueprintPanel.tsx';
 import { LabDashboard } from './components/LabDashboard.tsx';
 import { ProgramBlueprintPanel } from './components/ProgramBlueprintPanel.tsx';
@@ -22,6 +23,7 @@ function Root() {
   const [showProgramBlueprint, setShowProgramBlueprint] = useState(false);
   const [showDailyExperience, setShowDailyExperience] = useState(false);
   const [showFormulationBlueprint, setShowFormulationBlueprint] = useState(false);
+  const [showEvidenceClaims, setShowEvidenceClaims] = useState(false);
 
   return (
     <>
@@ -32,6 +34,7 @@ function Root() {
         <button onClick={() => setShowProgramBlueprint(true)} className="rounded-full border border-cyan-200 bg-cyan-50 px-4 py-3 text-xs font-black text-cyan-800 shadow-xl shadow-slate-900/10 transition hover:-translate-y-0.5 hover:border-cyan-300">Program Blueprint</button>
         <button onClick={() => setShowDailyExperience(true)} className="rounded-full border border-orange-200 bg-orange-50 px-4 py-3 text-xs font-black text-orange-800 shadow-xl shadow-slate-900/10 transition hover:-translate-y-0.5 hover:border-orange-300">Daily Experience</button>
         <button onClick={() => setShowFormulationBlueprint(true)} className="rounded-full border border-fuchsia-200 bg-fuchsia-50 px-4 py-3 text-xs font-black text-fuchsia-800 shadow-xl shadow-slate-900/10 transition hover:-translate-y-0.5 hover:border-fuchsia-300">Formulation Blueprint</button>
+        <button onClick={() => setShowEvidenceClaims(true)} className="rounded-full border border-amber-200 bg-amber-50 px-4 py-3 text-xs font-black text-amber-800 shadow-xl shadow-slate-900/10 transition hover:-translate-y-0.5 hover:border-amber-300">Evidence & Claims</button>
         <button onClick={() => setShowRules(true)} className="rounded-full border border-violet-200 bg-violet-50 px-4 py-3 text-xs font-black text-violet-800 shadow-xl shadow-slate-900/10 transition hover:-translate-y-0.5 hover:border-violet-300">Decision Rules</button>
         <button onClick={() => setShowRequirements(true)} className="rounded-full border border-slate-200 bg-white px-4 py-3 text-xs font-black text-slate-900 shadow-xl shadow-slate-900/10 transition hover:-translate-y-0.5 hover:border-indigo-300">Product Requirements</button>
         <button onClick={() => setShowLedger(true)} className="rounded-full border border-slate-200 bg-white px-4 py-3 text-xs font-black text-slate-900 shadow-xl shadow-slate-900/10 transition hover:-translate-y-0.5 hover:border-indigo-300">Architecture Ledger</button>
@@ -42,6 +45,7 @@ function Root() {
       {showProgramBlueprint && <ProgramBlueprintPanel onClose={() => setShowProgramBlueprint(false)} />}
       {showDailyExperience && <DailyExperiencePanel onClose={() => setShowDailyExperience(false)} />}
       {showFormulationBlueprint && <FormulationBlueprintPanel onClose={() => setShowFormulationBlueprint(false)} />}
+      {showEvidenceClaims && <EvidenceClaimsPanel onClose={() => setShowEvidenceClaims(false)} />}
       {showRules && <DecisionRulesPanel onClose={() => setShowRules(false)} />}
       {showRequirements && <RequirementsPanel onClose={() => setShowRequirements(false)} />}
       {showLedger && <ArchitectureLedger onClose={() => setShowLedger(false)} />}
