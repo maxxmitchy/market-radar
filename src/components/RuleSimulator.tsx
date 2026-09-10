@@ -1,10 +1,35 @@
 import { useState } from "react";
 import { CircleStop, Play, UserRound } from "lucide-react";
 import { sortDecisionRules, type RuleAction } from "../domain/decision-rules.js";
+import { DecisionSimulator } from "./DecisionSimulator.js";
 
 export function RuleSimulator() {
-  const [review, setReview] = useState(false); const [duration, setDuration] = useState<7|14|30|0>(7); const [ran, setRan] = useState(false);
-  const result: { action: RuleAction; rule: string } = review ? {action:"review",rule:"Explicit pharmacist review request"} : duration===0 ? {action:"stop",rule:"Program duration required"} : {action:"stop",rule:"Approved program gate"};
-  const Icon = result.action === "review" ? UserRound : CircleStop;
-  return <section className="rounded-[2rem] border border-violet-200 bg-white p-7 shadow-sm"><div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-start"><div><p className="text-[10px] font-black tracking-[.16em] text-violet-600">RULE SIMULATOR</p><h2 className="mt-2 text-2xl font-black">Interrogate the decision system.</h2><p className="mt-2 max-w-xl text-sm leading-6 text-slate-500">Change hypothetical inputs and see the architecture's current stop/review behavior. This is a product-design simulator, not clinical advice.</p></div><span className="rounded-full bg-slate-100 px-3 py-1 text-[10px] font-black text-slate-500">{sortDecisionRules().length} RULES</span></div><div className="mt-7 grid gap-4 md:grid-cols-3"><label className="rounded-xl border border-slate-200 p-4 text-sm font-bold">Pharmacist review?<select value={review?"yes":"no"} onChange={e=>setReview(e.target.value==="yes")} className="mt-2 w-full rounded-lg border border-slate-200 bg-white p-2"><option value="no">No</option><option value="yes">Yes</option></select></label><label className="rounded-xl border border-slate-200 p-4 text-sm font-bold">Program duration<select value={duration} onChange={e=>setDuration(Number(e.target.value) as 0|7|14|30)} className="mt-2 w-full rounded-lg border border-slate-200 bg-white p-2"><option value={0}>Not selected</option><option value={7}>7 days</option><option value={14}>14 days</option><option value={30}>30 days</option></select></label><button onClick={()=>setRan(true)} className="flex items-center justify-center gap-2 rounded-xl bg-slate-950 p-4 text-sm font-black text-white hover:bg-violet-700"><Play size={16}/>Run scenario</button></div>{ran&&<div className="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-5"><div className="flex items-center gap-3"><Icon size={18}/><div><div className="text-[10px] font-black tracking-[.14em]">CURRENT RESULT · {result.action.toUpperCase()}</div><div className="mt-1 text-lg font-black">{result.rule}</div></div></div><p className="mt-3 text-xs leading-5 text-slate-500">The simulator exposes the current product rule only; it does not establish medical eligibility or recommend treatment.</p></div>}</section>;
+  const [showSimulator, setShowSimulator] = useState(false);
+
+  return (
+    <section className="rounded-[2rem] border border-violet-200 bg-white p-7 shadow-sm">
+      <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-start">
+        <div>
+          <p className="text-[10px] font-black tracking-[.16em] text-violet-600">RULE SIMULATOR</p>
+          <h2 className="mt-2 text-2xl font-black">Interrogate the decision system.</h2>
+          <p className="mt-2 max-w-xl text-sm leading-6 text-slate-500">
+            Change hypothetical inputs and see the architecture's current stop/review behavior. This is a product-design simulator, not clinical advice.
+          </p>
+        </div>
+        <span className="rounded-full bg-slate-100 px-3 py-1 text-[10px] font-black text-slate-500">{sortDecisionRules().length} RULES</span>
+      </div>
+      
+      <div className="mt-7">
+        <button 
+          onClick={() => setShowSimulator(true)} 
+          className="flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl bg-slate-950 px-8 py-4 text-sm font-black text-white hover:bg-violet-700"
+        >
+          <Play size={16}/>
+          Open Simulator
+        </button>
+      </div>
+
+      {showSimulator && <DecisionSimulator onClose={() => setShowSimulator(false)} />}
+    </section>
+  );
 }

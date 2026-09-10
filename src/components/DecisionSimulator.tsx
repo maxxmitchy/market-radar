@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import type { ReactNode } from "react";
 import { CircleStop, FlaskConical, Play, UserRound, X } from "lucide-react";
 import type { AcademicStage, EatingRoutine, ProgramDuration, SleepQuality, StudentObjective } from "../domain/student.js";
 import { simulateStudentDecision } from "../intelligence/decision-simulator.js";
@@ -37,7 +38,7 @@ export function DecisionSimulator({ onClose }: { onClose: () => void }) {
         <div className="overflow-y-auto p-6 sm:p-8">
           <div className={`rounded-2xl border p-5 ${outcomeMeta.className}`}><div className="text-[10px] font-black tracking-[.16em]">CURRENT ENGINE OUTCOME</div><div className="mt-2 text-3xl font-black">{outcomeMeta.label}</div><p className="mt-2 text-sm font-semibold leading-6">{simulation.recommendation.title}</p></div>
           <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5"><div className="flex items-center gap-2 text-slate-400"><UserRound size={15}/><span className="text-[10px] font-black tracking-[.15em]">RECOMMENDATION TRACE</span></div><p className="mt-3 text-sm leading-6 text-slate-600">{simulation.recommendation.reason}</p><p className="mt-3 text-xs font-bold text-indigo-600">NEXT: {simulation.recommendation.nextStep}</p></div>
-          <div className="mt-6"><div className="mb-3 text-[10px] font-black tracking-[.15em] text-slate-400">RULE EVALUATION</div><div className="space-y-2">{simulation.trace.map(step => <div key={step.ruleId} className={`flex items-start gap-3 rounded-xl border p-4 ${step.matched ? "border-indigo-200 bg-indigo-50" : "border-slate-200 bg-white"}`}><div className={`mt-1 h-2 w-2 shrink-0 rounded-full ${step.matched ? "bg-indigo-500" : "bg-slate-300"}/><div><div className="text-sm font-black">{step.ruleName}</div><div className="mt-1 text-xs text-slate-500">{step.explanation}</div></div>{step.matched && <CircleStop size={15} className="ml-auto shrink-0 text-indigo-600"/>}</div>)}</div></div>
+          <div className="mt-6"><div className="mb-3 text-[10px] font-black tracking-[.15em] text-slate-400">RULE EVALUATION</div><div className="space-y-2">{simulation.trace.map(step => <div key={step.ruleId} className={`flex items-start gap-3 rounded-xl border p-4 ${step.matched ? "border-indigo-200 bg-indigo-50" : "border-slate-200 bg-white"}`}><div className={`mt-1 h-2 w-2 shrink-0 rounded-full ${step.matched ? "bg-indigo-500" : "bg-slate-300"}`} /><div><div className="text-sm font-black">{step.ruleName}</div><div className="mt-1 text-xs text-slate-500">{step.explanation}</div></div>{step.matched && <CircleStop size={15} className="ml-auto shrink-0 text-indigo-600"/>}</div>)}</div></div>
           <div className="mt-6 rounded-xl border border-dashed border-slate-300 p-4 text-xs leading-5 text-slate-500">This simulator exposes current product rules. It is a design/testing surface, not a clinical decision-maker.</div>
         </div>
       </div>
@@ -45,4 +46,4 @@ export function DecisionSimulator({ onClose }: { onClose: () => void }) {
   </div>;
 }
 
-function Field({ label, children }: { label: string; children: React.ReactNode }) { return <label className="block"><span className="mb-2 block text-[10px] font-black tracking-[.14em] text-slate-400">{label}</span><div className="[&_select]:w-full [&_select]:rounded-xl [&_select]:border [&_select]:border-slate-200 [&_select]:bg-white [&_select]:px-3 [&_select]:py-3 [&_select]:text-sm [&_select]:font-semibold">{children}</div></label>; }
+function Field({ label, children }: { label: string; children: ReactNode }) { return <label className="block"><span className="mb-2 block text-[10px] font-black tracking-[.14em] text-slate-400">{label}</span><div className="[&_select]:w-full [&_select]:rounded-xl [&_select]:border [&_select]:border-slate-200 [&_select]:bg-white [&_select]:px-3 [&_select]:py-3 [&_select]:text-sm [&_select]:font-semibold">{children}</div></label>; }

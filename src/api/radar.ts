@@ -67,18 +67,29 @@ export async function scanRadar(params: {
   });
 
   const response = await fetch(`/api/opportunities?${search.toString()}`);
+  const text = await response.text();
+
   if (!response.ok) {
     let detail = "Radar scan failed.";
     try {
-      const body = (await response.json()) as RadarError;
+      const body = JSON.parse(text) as RadarError;
       detail = [body.error, body.detail].filter(Boolean).join(" ") || detail;
     } catch {
-      // Keep the generic error when the server did not return JSON.
+      detail = `Server error (${response.status}). The provider may be unavailable.`;
     }
     throw new Error(detail);
   }
 
-  const data = (await response.json()) as RadarResponse;
+  let data: RadarResponse;
+  try {
+    data = JSON.parse(text) as RadarResponse;
+  } catch (e) {
+    if (text.toLowerCase().includes("<!doctype html>") || text.toLowerCase().includes("<html")) {
+      throw new Error("The request was intercepted by the AI Studio proxy (authentication redirect). Please refresh the page or open the app in a new tab to restore your session.");
+    }
+    throw new Error("The server returned invalid data instead of JSON.");
+  }
+
   return {
     source: data.source,
     generatedAt: data.generatedAt,

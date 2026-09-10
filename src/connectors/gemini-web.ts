@@ -65,14 +65,23 @@ export class GeminiWebMarketplaceConnector implements MarketplaceConnector {
       JSON.stringify(schema),
     ].join("\n");
 
-    const response = await this.ai.models.generateContent({
-      model: "gemini-3.8-flash",
-      contents: prompt,
-      config: {
-        tools: [{ googleSearch: {} }, { urlContext: {} }],
-        responseFormat: { text: { mimeType: "application/json", schema } },
-      },
-    });
+    let response;
+    try {
+      response = await this.ai.models.generateContent({
+        model: "gemini-3.8-flash",
+        contents: prompt,
+        config: {
+          tools: [{ googleSearch: {} }, { urlContext: {} }],
+          responseMimeType: "application/json",
+          responseSchema: schema,
+        },
+      });
+    } catch (e: any) {
+      if (e?.message?.includes("429") || e?.status === 429) {
+        throw new Error("Gemini API Quota Exceeded. Note: The Google Search Grounding tool used by this feature has separate, strict rate limits. Please try again later or switch MARKET_RADAR_PROVIDER to 'mock' in secrets.");
+      }
+      throw e;
+    }
 
     const raw = response.text?.trim();
     if (!raw) {
