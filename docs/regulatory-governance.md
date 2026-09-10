@@ -1,0 +1,1 @@
+The regulatory layer remains blocked until classification, intended use, permitted claims, labeling, and accountable review are established.
