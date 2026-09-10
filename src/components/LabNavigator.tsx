@@ -1,4 +1,5 @@
-import { Boxes, BrainCircuit, Building2, CheckSquare, ChevronRight, ClipboardCheck, FileBox, FileText, FlaskConical, GitBranch, GraduationCap, Hammer, LayoutDashboard, Menu, MessageSquare, Network, PackageCheck, ShieldAlert, SlidersHorizontal, Sparkles, UserRoundCog, X, type LucideIcon } from "lucide-react";
+import { useState } from "react";
+import { Boxes, BrainCircuit, Building2, ChevronRight, ClipboardCheck, FileBox, FileText, FlaskConical, GitBranch, GraduationCap, Hammer, LayoutDashboard, Menu, MessageSquare, Network, PackageCheck, ShieldAlert, SlidersHorizontal, Sparkles, UserRoundCog, X, type LucideIcon } from "lucide-react";
 
 export type LabSurface =
   | "dashboard" | "simulator" | "student-check" | "program" | "daily" | "formulation" | "evidence" | "safety" | "regulatory" | "quality" | "personalization" | "pack-generation" | "fulfillment" | "education" | "campus" | "feedback" | "pilot" | "product-specification" | "rules" | "requirements" | "ledger";
