@@ -1,5 +1,6 @@
-import { CircleAlert, ClipboardCheck, FlaskConical, GitBranch, ListChecks, ShieldCheck, UserRoundCog, X } from "lucide-react";
+import { CircleAlert, ClipboardCheck, FileBox, FlaskConical, GitBranch, ListChecks, ShieldCheck, UserRoundCog, X } from "lucide-react";
 import { formulationRegistry } from "../formulations/registry.js";
+import { packGenerationSummary } from "../intelligence/pack-generation-engine.js";
 import { personalizationSummary } from "../intelligence/personalization-engine.js";
 import { qualitySummary } from "../intelligence/quality-engine.js";
 import { requirementSummary } from "../intelligence/requirement-engine.js";
@@ -12,6 +13,7 @@ const workstreams = [
   { title: "Evidence traceability", state: "Needs validation", detail: "The evidence/claims registry still needs to be designed and connected to review records.", icon: ListChecks },
   { title: "Safety & escalation", state: "Defined", detail: "Human review is a first-class control point; the escalation catalogue remains a build target.", icon: ShieldCheck },
   { title: "Personalization", state: "Prototype", detail: "Permitted experience changes are separated from formulation and clinical decision-making.", icon: UserRoundCog },
+  { title: "Pack generation", state: "Prototype", detail: "The bridge from approved formulation to a traceable daily unit is defined as a governed contract.", icon: FileBox },
 ];
 
 const openQuestions = [
@@ -25,6 +27,7 @@ export function LabDashboard({ onClose }: { onClose: () => void }) {
   const formulation = formulationRegistry[0];
   const quality = qualitySummary();
   const personalization = personalizationSummary();
+  const packGeneration = packGenerationSummary();
   const total = summary.defined + summary.prototype + summary["needs-validation"] + summary.unresolved;
 
   return (
@@ -67,8 +70,8 @@ export function LabDashboard({ onClose }: { onClose: () => void }) {
             <div className="rounded-2xl border border-slate-200 bg-slate-950 p-6 text-white">
               <div className="flex items-center gap-2 text-indigo-300"><ClipboardCheck size={16} /><span className="text-[10px] font-black tracking-[.18em]">CURRENT CONTROL POINT</span></div>
               <h3 className="mt-3 text-2xl font-black">Nothing ships just because the concept is attractive.</h3>
-              <p className="mt-3 text-sm leading-7 text-slate-300">Program approval, formulation governance, evidence, safety, regulatory, quality and personalization boundaries remain separate from the interface. The lab keeps those controls visible while the product is being designed.</p>
-              <div className="mt-5 grid grid-cols-2 gap-2 text-xs font-bold"><div className="rounded-xl bg-white/10 p-3">FORMULATION<br /><span className="font-normal text-slate-400">{formulation.name}</span></div><div className="rounded-xl bg-white/10 p-3">QUALITY<br /><span className="font-normal text-slate-400">{quality.approved ? "approved" : "blocked"} · personalization {personalization.approved ? "approved" : "blocked"}</span></div></div>
+              <p className="mt-3 text-sm leading-7 text-slate-300">Program approval, formulation governance, evidence, safety, regulatory, quality, personalization and pack-generation controls remain separate from the interface. The lab keeps those boundaries visible while the product is being designed.</p>
+              <div className="mt-5 grid grid-cols-2 gap-2 text-xs font-bold"><div className="rounded-xl bg-white/10 p-3">FORMULATION<br /><span className="font-normal text-slate-400">{formulation.name}</span></div><div className="rounded-xl bg-white/10 p-3">OPERATIONS<br /><span className="font-normal text-slate-400">quality {quality.approved ? "approved" : "blocked"} · personalization {personalization.approved ? "approved" : "blocked"} · packs {packGeneration.approved ? "approved" : "blocked"}</span></div></div>
             </div>
           </section>
         </main>
