@@ -1,0 +1,1 @@
+Decision rules are inspectable product artifacts. The simulator is a design tool, not a clinical recommendation engine.
