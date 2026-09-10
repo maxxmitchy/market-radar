@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Boxes, BrainCircuit, ChevronRight, ClipboardCheck, FileText, FlaskConical, GitBranch, LayoutDashboard, Menu, Network, ShieldAlert, SlidersHorizontal, Sparkles, X } from "lucide-react";
+import { Boxes, BrainCircuit, ChevronRight, ClipboardCheck, FileText, FlaskConical, GitBranch, LayoutDashboard, Menu, Network, ShieldAlert, SlidersHorizontal, Sparkles, X, type LucideIcon } from "lucide-react";
 
 export type LabSurface =
   | "dashboard"
@@ -20,7 +20,13 @@ interface LabNavigatorProps {
   onOpen: (surface: LabSurface) => void;
 }
 
-const groups = [
+interface LabGroup {
+  label: string;
+  hint: string;
+  items: Array<[LabSurface, string, LucideIcon]>;
+}
+
+const groups: LabGroup[] = [
   {
     label: "UNDERSTAND",
     hint: "Start here",
@@ -58,7 +64,7 @@ const groups = [
       ["ledger", "Architecture Ledger", Network],
     ],
   },
-] as const;
+];
 
 export function LabNavigator({ onOpen }: LabNavigatorProps) {
   const [open, setOpen] = useState(false);
