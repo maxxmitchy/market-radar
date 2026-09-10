@@ -8,7 +8,9 @@ import { DecisionSimulator } from './components/DecisionSimulator.tsx';
 import { EvidenceClaimsPanel } from './components/EvidenceClaimsPanel.tsx';
 import { FormulationBlueprintPanel } from './components/FormulationBlueprintPanel.tsx';
 import { LabDashboard } from './components/LabDashboard.tsx';
+import { LabNavigator, type LabSurface } from './components/LabNavigator.tsx';
 import { ProgramBlueprintPanel } from './components/ProgramBlueprintPanel.tsx';
+import { QualityPanel } from './components/QualityPanel.tsx';
 import { RegulatoryPanel } from './components/RegulatoryPanel.tsx';
 import { RequirementsPanel } from './components/RequirementsPanel.tsx';
 import { SafetyEscalationPanel } from './components/SafetyEscalationPanel.tsx';
@@ -16,50 +18,32 @@ import { StudentCheck } from './components/StudentCheck.tsx';
 import './index.css';
 
 function Root() {
-  const [showStudentCheck, setShowStudentCheck] = useState(false);
-  const [showLedger, setShowLedger] = useState(false);
-  const [showRequirements, setShowRequirements] = useState(false);
-  const [showDashboard, setShowDashboard] = useState(false);
-  const [showRules, setShowRules] = useState(false);
-  const [showSimulator, setShowSimulator] = useState(false);
-  const [showProgramBlueprint, setShowProgramBlueprint] = useState(false);
-  const [showDailyExperience, setShowDailyExperience] = useState(false);
-  const [showFormulationBlueprint, setShowFormulationBlueprint] = useState(false);
-  const [showEvidenceClaims, setShowEvidenceClaims] = useState(false);
-  const [showSafetyEscalation, setShowSafetyEscalation] = useState(false);
-  const [showRegulatory, setShowRegulatory] = useState(false);
+  const [surface, setSurface] = useState<LabSurface | null>(null);
 
   return (
     <>
       <App />
-      <div className="fixed bottom-5 right-5 z-50 flex max-w-[calc(100vw-2rem)] flex-wrap justify-end gap-2">
-        <button onClick={() => setShowDashboard(true)} className="rounded-full border border-indigo-200 bg-indigo-50 px-4 py-3 text-xs font-black text-indigo-800 shadow-xl shadow-slate-900/10 transition hover:-translate-y-0.5 hover:border-indigo-300">Lab Status</button>
-        <button onClick={() => setShowSimulator(true)} className="rounded-full border border-emerald-200 bg-emerald-50 px-4 py-3 text-xs font-black text-emerald-800 shadow-xl shadow-slate-900/10 transition hover:-translate-y-0.5 hover:border-emerald-300">Scenario Simulator</button>
-        <button onClick={() => setShowProgramBlueprint(true)} className="rounded-full border border-cyan-200 bg-cyan-50 px-4 py-3 text-xs font-black text-cyan-800 shadow-xl shadow-slate-900/10 transition hover:-translate-y-0.5 hover:border-cyan-300">Program Blueprint</button>
-        <button onClick={() => setShowDailyExperience(true)} className="rounded-full border border-orange-200 bg-orange-50 px-4 py-3 text-xs font-black text-orange-800 shadow-xl shadow-slate-900/10 transition hover:-translate-y-0.5 hover:border-orange-300">Daily Experience</button>
-        <button onClick={() => setShowFormulationBlueprint(true)} className="rounded-full border border-fuchsia-200 bg-fuchsia-50 px-4 py-3 text-xs font-black text-fuchsia-800 shadow-xl shadow-slate-900/10 transition hover:-translate-y-0.5 hover:border-fuchsia-300">Formulation Blueprint</button>
-        <button onClick={() => setShowEvidenceClaims(true)} className="rounded-full border border-amber-200 bg-amber-50 px-4 py-3 text-xs font-black text-amber-800 shadow-xl shadow-slate-900/10 transition hover:-translate-y-0.5 hover:border-amber-300">Evidence & Claims</button>
-        <button onClick={() => setShowSafetyEscalation(true)} className="rounded-full border border-rose-200 bg-rose-50 px-4 py-3 text-xs font-black text-rose-800 shadow-xl shadow-slate-900/10 transition hover:-translate-y-0.5 hover:border-rose-300">Safety & Escalation</button>
-        <button onClick={() => setShowRegulatory(true)} className="rounded-full border border-blue-200 bg-blue-50 px-4 py-3 text-xs font-black text-blue-800 shadow-xl shadow-slate-900/10 transition hover:-translate-y-0.5 hover:border-blue-300">Regulatory Blueprint</button>
-        <button onClick={() => setShowRules(true)} className="rounded-full border border-violet-200 bg-violet-50 px-4 py-3 text-xs font-black text-violet-800 shadow-xl shadow-slate-900/10 transition hover:-translate-y-0.5 hover:border-violet-300">Decision Rules</button>
-        <button onClick={() => setShowRequirements(true)} className="rounded-full border border-slate-200 bg-white px-4 py-3 text-xs font-black text-slate-900 shadow-xl shadow-slate-900/10 transition hover:-translate-y-0.5 hover:border-indigo-300">Product Requirements</button>
-        <button onClick={() => setShowLedger(true)} className="rounded-full border border-slate-200 bg-white px-4 py-3 text-xs font-black text-slate-900 shadow-xl shadow-slate-900/10 transition hover:-translate-y-0.5 hover:border-indigo-300">Architecture Ledger</button>
-        <button onClick={() => setShowStudentCheck(true)} className="rounded-full bg-slate-950 px-4 py-3 text-xs font-black text-white shadow-xl shadow-slate-900/20 transition hover:-translate-y-0.5 hover:bg-indigo-700" aria-label="Open Student Check prototype">Student Check</button>
-      </div>
-      {showDashboard && <LabDashboard onClose={() => setShowDashboard(false)} />}
-      {showSimulator && <DecisionSimulator onClose={() => setShowSimulator(false)} />}
-      {showProgramBlueprint && <ProgramBlueprintPanel onClose={() => setShowProgramBlueprint(false)} />}
-      {showDailyExperience && <DailyExperiencePanel onClose={() => setShowDailyExperience(false)} />}
-      {showFormulationBlueprint && <FormulationBlueprintPanel onClose={() => setShowFormulationBlueprint(false)} />}
-      {showEvidenceClaims && <EvidenceClaimsPanel onClose={() => setShowEvidenceClaims(false)} />}
-      {showSafetyEscalation && <SafetyEscalationPanel onClose={() => setShowSafetyEscalation(false)} />}
-      {showRegulatory && <RegulatoryPanel onClose={() => setShowRegulatory(false)} />}
-      {showRules && <DecisionRulesPanel onClose={() => setShowRules(false)} />}
-      {showRequirements && <RequirementsPanel onClose={() => setShowRequirements(false)} />}
-      {showLedger && <ArchitectureLedger onClose={() => setShowLedger(false)} />}
-      {showStudentCheck && <StudentCheck onClose={() => setShowStudentCheck(false)} />}
+      <LabNavigator onOpen={setSurface} />
+
+      {surface === 'dashboard' && <LabDashboard onClose={() => setSurface(null)} />}
+      {surface === 'simulator' && <DecisionSimulator onClose={() => setSurface(null)} />}
+      {surface === 'student-check' && <StudentCheck onClose={() => setSurface(null)} />}
+      {surface === 'program' && <ProgramBlueprintPanel onClose={() => setSurface(null)} />}
+      {surface === 'daily' && <DailyExperiencePanel onClose={() => setSurface(null)} />}
+      {surface === 'formulation' && <FormulationBlueprintPanel onClose={() => setSurface(null)} />}
+      {surface === 'evidence' && <EvidenceClaimsPanel onClose={() => setSurface(null)} />}
+      {surface === 'safety' && <SafetyEscalationPanel onClose={() => setSurface(null)} />}
+      {surface === 'regulatory' && <RegulatoryPanel onClose={() => setSurface(null)} />}
+      {surface === 'quality' && <QualityPanel onClose={() => setSurface(null)} />}
+      {surface === 'rules' && <DecisionRulesPanel onClose={() => setSurface(null)} />}
+      {surface === 'requirements' && <RequirementsPanel onClose={() => setSurface(null)} />}
+      {surface === 'ledger' && <ArchitectureLedger onClose={() => setSurface(null)} />}
     </>
   );
 }
 
-createRoot(document.getElementById('root')!).render(<StrictMode><Root /></StrictMode>);
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <Root />
+  </StrictMode>,
+);
