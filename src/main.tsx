@@ -5,6 +5,7 @@ import { ArchitectureLedger } from './components/ArchitectureLedger.tsx';
 import { DailyExperiencePanel } from './components/DailyExperiencePanel.tsx';
 import { DecisionRulesPanel } from './components/DecisionRulesPanel.tsx';
 import { DecisionSimulator } from './components/DecisionSimulator.tsx';
+import { EducationPanel } from './components/EducationPanel.tsx';
 import { EvidenceClaimsPanel } from './components/EvidenceClaimsPanel.tsx';
 import { FormulationBlueprintPanel } from './components/FormulationBlueprintPanel.tsx';
 import { FulfillmentPanel } from './components/FulfillmentPanel.tsx';
@@ -39,6 +40,7 @@ function Root() {
       {surface === 'personalization' && <PersonalizationPanel onClose={() => setSurface(null)} />}
       {surface === 'pack-generation' && <PackGenerationPanel onClose={() => setSurface(null)} />}
       {surface === 'fulfillment' && <FulfillmentPanel onClose={() => setSurface(null)} />}
+      {surface === 'education' && <EducationPanel onClose={() => setSurface(null)} />}
       {surface === 'rules' && <DecisionRulesPanel onClose={() => setSurface(null)} />}
       {surface === 'requirements' && <RequirementsPanel onClose={() => setSurface(null)} />}
       {surface === 'ledger' && <ArchitectureLedger onClose={() => setSurface(null)} />}
