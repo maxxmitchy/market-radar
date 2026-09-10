@@ -14,9 +14,7 @@ export const qualityRegistry: QualityDefinition[] = [
     formulationId: "student-foundation-v1",
     status: "draft",
     specificationReferences: [],
-    releaseCriteria: [
-      "Final release criteria must be defined against the approved formulation and confirmed production specification.",
-    ],
+    releaseCriteria: [],
     traceabilityRequirements: [
       "Released units must remain traceable to the approved formulation and applicable specification/version records.",
     ],
