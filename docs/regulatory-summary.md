@@ -1,0 +1,1 @@
+Regulatory blueprint: classification -> intended use -> permitted claims -> labeling -> accountable review.
