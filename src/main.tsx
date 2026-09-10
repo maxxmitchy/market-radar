@@ -16,6 +16,7 @@ import { LabNavigator, type LabSurface } from './components/LabNavigator.tsx';
 import { PackGenerationPanel } from './components/PackGenerationPanel.tsx';
 import { PersonalizationPanel } from './components/PersonalizationPanel.tsx';
 import { PilotPanel } from './components/PilotPanel.tsx';
+import { ProductSpecificationPanel } from './components/ProductSpecificationPanel.tsx';
 import { ProgramBlueprintPanel } from './components/ProgramBlueprintPanel.tsx';
 import { QualityPanel } from './components/QualityPanel.tsx';
 import { RegulatoryPanel } from './components/RegulatoryPanel.tsx';
@@ -44,6 +45,7 @@ function Root() {
     {surface === 'campus' && <CampusPanel onClose={() => setSurface(null)} />}
     {surface === 'feedback' && <FeedbackPanel onClose={() => setSurface(null)} />}
     {surface === 'pilot' && <PilotPanel onClose={() => setSurface(null)} />}
+    {surface === 'product-specification' && <ProductSpecificationPanel onClose={() => setSurface(null)} />}
     {surface === 'rules' && <DecisionRulesPanel onClose={() => setSurface(null)} />}
     {surface === 'requirements' && <RequirementsPanel onClose={() => setSurface(null)} />}
     {surface === 'ledger' && <ArchitectureLedger onClose={() => setSurface(null)} />}
