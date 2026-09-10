@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import { ArrowLeft, ArrowRight, Check, Clock3, GraduationCap, Moon, ShieldCheck, Sparkles, Utensils, X } from "lucide-react";
 
 type Stage = "semester" | "assignments" | "tests" | "exams" | "final-year" | "professional-exams" | "break";
@@ -82,7 +82,7 @@ export function StudentCheck({ onClose }: { onClose: () => void }) {
   );
 }
 
-function Question({ icon: Icon, eyebrow, title, subtitle, children }: { icon: typeof GraduationCap; eyebrow: string; title: string; subtitle: string; children: React.ReactNode }) {
+function Question({ icon: Icon, eyebrow, title, subtitle, children }: { icon: typeof GraduationCap; eyebrow: string; title: string; subtitle: string; children: ReactNode }) {
   return <div><div className="grid h-11 w-11 place-items-center rounded-2xl bg-indigo-50 text-indigo-600"><Icon size={21} /></div><p className="mt-6 text-xs font-black uppercase tracking-[.2em] text-indigo-600">{eyebrow}</p><h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">{title}</h2><p className="mt-3 max-w-xl leading-7 text-slate-500">{subtitle}</p><div className="mt-7 grid gap-3">{children}</div></div>;
 }
 
