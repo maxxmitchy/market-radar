@@ -75,7 +75,7 @@ export function LabNavigator({ onOpen }: LabNavigatorProps) {
           <div className="border-b border-slate-200 bg-slate-950 p-5 text-white">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="text-[10px] font-black tracking-[0.18em] text-indigo-300">CAREFlUX STUDENT / LAB</p>
+                <p className="text-[10px] font-black tracking-[0.18em] text-indigo-300">CAREFLUX STUDENT / LAB</p>
                 <h2 className="mt-1 text-lg font-black">Where do you want to inspect?</h2>
                 <p className="mt-1 text-xs leading-5 text-slate-300">Move through the product in the same order we are designing it.</p>
               </div>
