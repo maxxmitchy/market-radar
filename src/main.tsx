@@ -2,6 +2,7 @@ import { StrictMode, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import { ArchitectureLedger } from './components/ArchitectureLedger.tsx';
+import { CampusPanel } from './components/CampusPanel.tsx';
 import { DailyExperiencePanel } from './components/DailyExperiencePanel.tsx';
 import { DecisionRulesPanel } from './components/DecisionRulesPanel.tsx';
 import { DecisionSimulator } from './components/DecisionSimulator.tsx';
@@ -41,6 +42,7 @@ function Root() {
       {surface === 'pack-generation' && <PackGenerationPanel onClose={() => setSurface(null)} />}
       {surface === 'fulfillment' && <FulfillmentPanel onClose={() => setSurface(null)} />}
       {surface === 'education' && <EducationPanel onClose={() => setSurface(null)} />}
+      {surface === 'campus' && <CampusPanel onClose={() => setSurface(null)} />}
       {surface === 'rules' && <DecisionRulesPanel onClose={() => setSurface(null)} />}
       {surface === 'requirements' && <RequirementsPanel onClose={() => setSurface(null)} />}
       {surface === 'ledger' && <ArchitectureLedger onClose={() => setSurface(null)} />}
