@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Boxes, BrainCircuit, Building2, ChevronRight, ClipboardCheck, FileBox, FileText, FlaskConical, GitBranch, GraduationCap, LayoutDashboard, Menu, Network, PackageCheck, ShieldAlert, SlidersHorizontal, Sparkles, UserRoundCog, X, type LucideIcon } from "lucide-react";
+import { BarChart3, Boxes, BrainCircuit, Building2, ChevronRight, ClipboardCheck, FileBox, FileText, FlaskConical, GitBranch, GraduationCap, LayoutDashboard, Menu, MessageSquare, Network, PackageCheck, ShieldAlert, SlidersHorizontal, Sparkles, UserRoundCog, X, type LucideIcon } from "lucide-react";
 
 export type LabSurface =
-  | "dashboard" | "simulator" | "student-check" | "program" | "daily" | "formulation" | "evidence" | "safety" | "regulatory" | "quality" | "personalization" | "pack-generation" | "fulfillment" | "education" | "campus" | "rules" | "requirements" | "ledger";
+  | "dashboard" | "simulator" | "student-check" | "program" | "daily" | "formulation" | "evidence" | "safety" | "regulatory" | "quality" | "personalization" | "pack-generation" | "fulfillment" | "education" | "campus" | "feedback" | "rules" | "requirements" | "ledger";
 
 interface LabNavigatorProps { onOpen: (surface: LabSurface) => void; }
 interface LabGroup { label: string; hint: string; items: Array<[LabSurface, string, LucideIcon]>; }
@@ -11,7 +11,7 @@ const groups: LabGroup[] = [
   { label: "UNDERSTAND", hint: "Start here", items: [["dashboard", "Lab Status", LayoutDashboard], ["student-check", "Student Check", SlidersHorizontal], ["simulator", "Scenario Simulator", BrainCircuit]] },
   { label: "DEFINE", hint: "Shape the product", items: [["program", "Program Blueprint", GitBranch], ["daily", "Daily Experience", Boxes], ["formulation", "Formulation Blueprint", FlaskConical]] },
   { label: "CONTROL", hint: "Decide what can proceed", items: [["evidence", "Evidence & Claims", FileText], ["safety", "Safety & Escalation", ShieldAlert], ["regulatory", "Regulatory Blueprint", Network], ["quality", "Quality Blueprint", ClipboardCheck]] },
-  { label: "OPERATE", hint: "Translate approved design into a permitted experience", items: [["personalization", "Personalization Blueprint", UserRoundCog], ["pack-generation", "Pack Generation Blueprint", FileBox], ["fulfillment", "Fulfillment Blueprint", PackageCheck], ["education", "Education Blueprint", GraduationCap], ["campus", "Campus Blueprint", Building2]] },
+  { label: "OPERATE", hint: "Translate approved design into a permitted experience", items: [["personalization", "Personalization Blueprint", UserRoundCog], ["pack-generation", "Pack Generation Blueprint", FileBox], ["fulfillment", "Fulfillment Blueprint", PackageCheck], ["education", "Education Blueprint", GraduationCap], ["campus", "Campus Blueprint", Building2], ["feedback", "Feedback Blueprint", MessageSquare]] },
   { label: "BUILD THE SYSTEM", hint: "Keep the architecture coherent", items: [["rules", "Decision Rules", Sparkles], ["requirements", "Product Requirements", FileText], ["ledger", "Architecture Ledger", Network]] },
 ];
 
