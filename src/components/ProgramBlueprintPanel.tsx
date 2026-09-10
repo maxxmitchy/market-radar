@@ -1,3 +1,4 @@
+import { type ReactNode } from "react";
 import { CircleAlert, CircleCheck, Layers3, ShieldCheck, X } from "lucide-react";
 import { programDefinitions, isProgramReady, type ProgramDefinition } from "../domain/program.js";
 import { inspectPrograms } from "../intelligence/program-engine.js";
@@ -44,8 +45,8 @@ export function ProgramBlueprintPanel({ onClose }: { onClose: () => void }) {
                 <span className="rounded-full bg-amber-50 px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-amber-800">{lifecycleLabel[program.lifecycle]}</span>
               </div>
               <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-                <BlueprintBlock title="Eligibility" icon={<CircleCheck size={15} />} items={[`Objective: ${program.eligibility.objective}`, `Stages: ${program.eligibility.academicStages.join(", ")}`, `Durations: ${program.eligibility.allowedDurations.join(", ")} days`, `Pharmacist review: ${program.eligibility.requiresPharmacistReview ? "required" : "not forced by definition"}`} />
-                <BlueprintBlock title="Dependencies" icon={<Layers3 size={15} />} items={[`Formulation: ${program.formulationId ?? "not connected"}`, `Daily pack: ${program.dailyPackSpecId ?? "not connected"}`, `Education: ${program.educationPlanId ?? "not connected"}`} />
+                <BlueprintBlock title="Eligibility" icon={<CircleCheck size={15} />} items={[`Objective: ${program.eligibility.objective}`, `Stages: ${program.eligibility.academicStages.join(", ")}`, `Durations: ${program.eligibility.allowedDurations.join(", ")} days`, `Pharmacist review: ${program.eligibility.requiresPharmacistReview ? "required" : "not forced by definition"}`]} />
+                <BlueprintBlock title="Dependencies" icon={<Layers3 size={15} />} items={[`Formulation: ${program.formulationId ?? "not connected"}`, `Daily pack: ${program.dailyPackSpecId ?? "not connected"}`, `Education: ${program.educationPlanId ?? "not connected"}`]} />
                 <BlueprintBlock title="Boundaries" icon={<ShieldCheck size={15} />} items={program.boundaries} />
                 <BlueprintBlock title="Open design questions" icon={<CircleAlert size={15} />} items={program.unresolvedQuestions} />
               </div>
@@ -57,7 +58,7 @@ export function ProgramBlueprintPanel({ onClose }: { onClose: () => void }) {
   );
 }
 
-function ProgramCard({ program, ready, missingArtifacts }: { program: ProgramDefinition; ready: boolean; missingArtifacts: string[] }) {
+function ProgramCard({ program, ready, missingArtifacts }: { program: ProgramDefinition; ready: boolean; missingArtifacts: string[]; key?: string }) {
   return <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
     <div className="flex items-start justify-between gap-3"><div className="grid h-10 w-10 place-items-center rounded-xl bg-indigo-50 text-indigo-600"><Layers3 size={18} /></div><span className="rounded-full bg-slate-100 px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-slate-600">V{program.version}</span></div>
     <h3 className="mt-5 font-black">{program.name}</h3><p className="mt-2 text-sm leading-6 text-slate-500">{program.proposition}</p>
@@ -67,6 +68,6 @@ function ProgramCard({ program, ready, missingArtifacts }: { program: ProgramDef
   </article>;
 }
 
-function BlueprintBlock({ title, icon, items }: { title: string; icon: React.ReactNode; items: string[] }) {
+function BlueprintBlock({ title, icon, items }: { title: string; icon: ReactNode; items: string[] }) {
   return <div className="rounded-xl border border-slate-200 bg-slate-50 p-4"><div className="flex items-center gap-2 text-xs font-black text-slate-800">{icon}{title}</div><div className="mt-3 space-y-2">{items.map((item) => <div key={item} className="text-xs leading-5 text-slate-500">{item}</div>)}</div></div>;
 }
