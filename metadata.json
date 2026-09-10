@@ -1,6 +1,6 @@
 {
-  "name": "Market Radar",
-  "description": "A comprehensive market analysis and tracking application.",
+  "name": "Careflux Student",
+  "description": "Affordable, pharmacist-curated daily wellness for Nigerian university students.",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

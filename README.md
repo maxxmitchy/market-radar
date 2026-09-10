@@ -1,30 +1,44 @@
-# Market Radar
+# Careflux Student
 
-Market Radar is a marketplace intelligence application: it turns marketplace listings into ranked resale opportunities.
+Careflux Student is a consumer-health experience built around one simple idea: **students should be able to buy the days they need, not bottles they cannot afford.**
 
-## Current direction
+## Product direction
 
-The repository keeps the visible web app on `main` while the intelligence engine lives alongside it as provider-neutral TypeScript modules.
+The product is designed for Nigerian university students who want convenient, pharmacist-curated daily wellness support without the cost and complexity of purchasing multiple full-size supplement bottles.
 
-Core pipeline:
+Initial programs:
 
-`marketplace source → normalized listings → comparable valuation → opportunity score`
+- **7 days** — low-commitment trial
+- **14 days** — introductory/core program
+- **30 days** — recurring-value program
+- **Future:** semester programs, subject to appropriate safeguards and regulatory compliance
 
-The initial intelligence milestone is read-only. It does not automatically message sellers, purchase goods, or create listings.
+## Product principles
 
-## Core modules
+Careflux Student is not positioned as a “brain pill.” It will not promise to make students smarter, cure stress, or replace sleep, food, or medical care.
 
-- `src/domain/` — provider-neutral listing, valuation, and opportunity contracts
-- `src/connectors/` — marketplace adapters and local mock connector
-- `src/connectors/facebook/` — isolated read-only Facebook Marketplace adapter
-- `src/intelligence/` — valuation, scoring, and deal discovery
+Formulations are intended to be pharmacist-curated and reviewed for:
 
-## Facebook connector
+- Evidence
+- Dose
+- Safety and interactions
+- Contraindications
+- Duplication
+- Student suitability
+- Product quality
+- Storage
+- Cost
+- Nigerian regulatory requirements
+- Appropriate health claims
 
-The Facebook adapter accepts an explicitly supplied authenticated session at runtime. It does not store account credentials or browser cookies in the repository.
+The commercial repackaging/dispensing model, labelling, traceability, storage and claims must be validated against the applicable Nigerian regulatory framework before launch.
 
-Facebook's internal Marketplace protocol is undocumented and may change. Automated access may also be restricted by Facebook's terms. Keep usage authorized, read-only, and low-rate.
+## Experience
+
+`DISCOVER → EDUCATE → CHOOSE DAYS → RECEIVE DAILY PACKS → USE → SHARE → REFER`
+
+The longer-term vision is a student health platform spanning wellness, OTC medicines, menstrual health, personal care, nutrition, telehealth, reminders, refills, campus delivery and health education where appropriate.
 
 ## Development
 
-The visible app remains the primary `main`-branch experience. The intelligence modules can be integrated into the UI/API incrementally without replacing the frontend foundation.
+The current frontend is the first Careflux Student product experience. Legacy marketplace-intelligence modules remain in the repository temporarily while the application is progressively repurposed.
