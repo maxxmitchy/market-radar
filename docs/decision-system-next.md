@@ -1,0 +1,1 @@
+Decision rules are now exposed as inspectable product artifacts and a hypothetical scenario simulator. Next increment should make scenarios data-driven and show rule traces in priority order.
