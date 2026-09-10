@@ -1,0 +1,1 @@
+No regulatory approval is asserted.
