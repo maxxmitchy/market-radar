@@ -22,11 +22,11 @@ const objectives: Choice[] = [
   { id: "recovery-routine", label: "Get back to a routine after a busy period" },
 ];
 
-const durationChoices: Array<{ id: ProgramDuration; label: string; description: string }> = [
-  { id: 7, label: "7 days", description: "Start small" },
-  { id: 14, label: "14 days", description: "A two-week routine" },
-  { id: 30, label: "30 days", description: "A full month" },
-  { id: 0, label: "More than 30 days", description: "I'll decide later" },
+const durationChoices: Choice[] = [
+  { id: "7", label: "7 days", description: "Start small" },
+  { id: "14", label: "14 days", description: "A two-week routine" },
+  { id: "30", label: "30 days", description: "A full month" },
+  { id: "0", label: "More than 30 days", description: "I'll decide later" },
 ];
 
 const routines: Array<{ id: EatingRoutine; label: string }> = [
@@ -51,7 +51,6 @@ export function StudentCheck({ onClose }: { onClose: () => void }) {
   const [duration, setDuration] = useState<ProgramDuration | null>(null);
   const [routine, setRoutine] = useState<EatingRoutine | null>(null);
   const [sleepQuality, setSleepQuality] = useState<SleepQuality | null>(null);
-  const [needsReview, setNeedsReview] = useState(false);
   const [recommendation, setRecommendation] = useState<StudentRecommendation | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -65,12 +64,11 @@ export function StudentCheck({ onClose }: { onClose: () => void }) {
     objective: objective ? objectiveLabels.get(objective) ?? objective : "Not selected",
     duration: duration === 0 ? "More than 30 days" : duration ? `${duration} days` : "Not selected",
     routine: routines.find((item) => item.id === routine)?.label ?? "Not selected",
-    sleep: sleep.map((item) => item.id === sleepQuality ? item.label : "").find(Boolean) ?? "Not selected",
+    sleep: sleep.find((item) => item.id === sleepQuality)?.label ?? "Not selected",
   }), [stage, objective, duration, routine, sleepQuality]);
 
   const submitProfile = async (reviewRequested: boolean) => {
     if (!stage || !objective || duration === null || !routine || !sleepQuality) return;
-    setNeedsReview(reviewRequested);
     setLoading(true);
     setError(false);
 
@@ -114,7 +112,6 @@ export function StudentCheck({ onClose }: { onClose: () => void }) {
     setDuration(null);
     setRoutine(null);
     setSleepQuality(null);
-    setNeedsReview(false);
     setRecommendation(null);
     setError(false);
   };
@@ -161,7 +158,7 @@ function Result({ profile, recommendation, onRestart, onClose }: { profile: { st
   if (!recommendation) return <div><h2 className="text-3xl font-black">No result available.</h2><button onClick={onRestart} className="mt-6 rounded-full bg-[#111827] px-5 py-3 text-sm font-bold text-white">Retake check</button></div>;
 
   const review = recommendation.status === "pharmacist-review";
-  const matched = recommendation.status === "no-match" && Boolean(recommendation.programId);
+  const frameworkIdentified = recommendation.status === "no-match" && Boolean(recommendation.programId);
 
-  return <div><div className="mb-5 inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1.5 text-xs font-bold text-indigo-700"><Sparkles size={14} /> PROGRAM MATCH RESULT</div><h2 className="text-3xl font-black tracking-tight sm:text-4xl">{recommendation.title}</h2><p className="mt-4 max-w-xl leading-7 text-slate-500">{recommendation.reason}</p><div className="mt-7 grid gap-3 sm:grid-cols-2">{[["Academic stage", profile.stage],["Objective", profile.objective],["Program duration", profile.duration],["Routine", profile.routine],["Sleep", profile.sleep]].map(([label, value]) => <div key={label} className="rounded-2xl border border-slate-200 bg-white p-4"><div className="text-xs font-bold uppercase tracking-wider text-slate-400">{label}</div><div className="mt-1 font-bold">{value}</div></div>)}</div><div className={`mt-6 rounded-3xl p-6 ${review ? "bg-amber-50 text-amber-950" : "bg-[#111827] text-white"}`}><div className="text-xs font-black uppercase tracking-[.2em] opacity-70">Next step</div><div className="mt-2 text-xl font-black">{recommendation.nextStep}</div>{recommendation.matchedSignals.length > 0 && <ul className="mt-4 grid gap-2 text-sm opacity-80">{recommendation.matchedSignals.map((signal) => <li key={signal}>• {signal}</li>)}</ul>}{matched && <p className="mt-4 text-sm opacity-70">The framework is identified, but the program remains unavailable until its formulation and required approvals are complete.</p>}</div><div className="mt-7 flex flex-wrap gap-3"><button onClick={onRestart} className="rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-bold">Retake check</button><button onClick={onClose} className="rounded-full bg-[#111827] px-5 py-3 text-sm font-bold text-white">Continue exploring</button></div></div>;
+  return <div><div className="mb-5 inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1.5 text-xs font-bold text-indigo-700"><Sparkles size={14} /> PROGRAM MATCH RESULT</div><h2 className="text-3xl font-black tracking-tight sm:text-4xl">{recommendation.title}</h2><p className="mt-4 max-w-xl leading-7 text-slate-500">{recommendation.reason}</p><div className="mt-7 grid gap-3 sm:grid-cols-2">{[["Academic stage", profile.stage],["Objective", profile.objective],["Program duration", profile.duration],["Routine", profile.routine],["Sleep", profile.sleep]].map(([label, value]) => <div key={label} className="rounded-2xl border border-slate-200 bg-white p-4"><div className="text-xs font-bold uppercase tracking-wider text-slate-400">{label}</div><div className="mt-1 font-bold">{value}</div></div>)}</div><div className={`mt-6 rounded-3xl p-6 ${review ? "bg-amber-50 text-amber-950" : "bg-[#111827] text-white"}`}><div className="text-xs font-black uppercase tracking-[.2em] opacity-70">Next step</div><div className="mt-2 text-xl font-black">{recommendation.nextStep}</div>{recommendation.matchedSignals.length > 0 && <ul className="mt-4 grid gap-2 text-sm opacity-80">{recommendation.matchedSignals.map((signal) => <li key={signal}>• {signal}</li>)}</ul>}{frameworkIdentified && <p className="mt-4 text-sm opacity-70">The framework is identified, but the program remains unavailable until its formulation and required approvals are complete.</p>}</div><div className="mt-7 flex flex-wrap gap-3"><button onClick={onRestart} className="rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-bold">Retake check</button><button onClick={onClose} className="rounded-full bg-[#111827] px-5 py-3 text-sm font-bold text-white">Continue exploring</button></div></div>;
 }
