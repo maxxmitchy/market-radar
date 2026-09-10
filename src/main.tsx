@@ -12,10 +12,10 @@ function Root() {
       <App />
       <button
         onClick={() => setShowStudentCheck(true)}
-        className="fixed bottom-5 right-5 z-50 inline-flex items-center gap-2 rounded-full bg-indigo-600 px-5 py-3.5 text-sm font-black text-white shadow-xl shadow-indigo-900/20 transition hover:-translate-y-0.5 hover:bg-indigo-700"
-        aria-label="Open Careflux Student Check"
+        className="fixed bottom-5 right-5 z-50 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-950 px-5 py-3.5 text-sm font-black text-white shadow-xl shadow-slate-900/20 transition hover:-translate-y-0.5 hover:bg-indigo-700"
+        aria-label="Open Student Check prototype"
       >
-        Find my plan
+        Prototype: Student Check
       </button>
       {showStudentCheck && <StudentCheck onClose={() => setShowStudentCheck(false)} />}
     </>
