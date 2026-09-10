@@ -7,6 +7,7 @@ import { DecisionRulesPanel } from './components/DecisionRulesPanel.tsx';
 import { DecisionSimulator } from './components/DecisionSimulator.tsx';
 import { EvidenceClaimsPanel } from './components/EvidenceClaimsPanel.tsx';
 import { FormulationBlueprintPanel } from './components/FormulationBlueprintPanel.tsx';
+import { FulfillmentPanel } from './components/FulfillmentPanel.tsx';
 import { LabDashboard } from './components/LabDashboard.tsx';
 import { LabNavigator, type LabSurface } from './components/LabNavigator.tsx';
 import { PackGenerationPanel } from './components/PackGenerationPanel.tsx';
@@ -21,12 +22,10 @@ import './index.css';
 
 function Root() {
   const [surface, setSurface] = useState<LabSurface | null>(null);
-
   return (
     <>
       <App />
       <LabNavigator onOpen={setSurface} />
-
       {surface === 'dashboard' && <LabDashboard onClose={() => setSurface(null)} />}
       {surface === 'simulator' && <DecisionSimulator onClose={() => setSurface(null)} />}
       {surface === 'student-check' && <StudentCheck onClose={() => setSurface(null)} />}
@@ -39,6 +38,7 @@ function Root() {
       {surface === 'quality' && <QualityPanel onClose={() => setSurface(null)} />}
       {surface === 'personalization' && <PersonalizationPanel onClose={() => setSurface(null)} />}
       {surface === 'pack-generation' && <PackGenerationPanel onClose={() => setSurface(null)} />}
+      {surface === 'fulfillment' && <FulfillmentPanel onClose={() => setSurface(null)} />}
       {surface === 'rules' && <DecisionRulesPanel onClose={() => setSurface(null)} />}
       {surface === 'requirements' && <RequirementsPanel onClose={() => setSurface(null)} />}
       {surface === 'ledger' && <ArchitectureLedger onClose={() => setSurface(null)} />}
@@ -46,8 +46,4 @@ function Root() {
   );
 }
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <Root />
-  </StrictMode>,
-);
+createRoot(document.getElementById('root')!).render(<StrictMode><Root /></StrictMode>);
