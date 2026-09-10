@@ -9,6 +9,7 @@ import { EvidenceClaimsPanel } from './components/EvidenceClaimsPanel.tsx';
 import { FormulationBlueprintPanel } from './components/FormulationBlueprintPanel.tsx';
 import { LabDashboard } from './components/LabDashboard.tsx';
 import { LabNavigator, type LabSurface } from './components/LabNavigator.tsx';
+import { PersonalizationPanel } from './components/PersonalizationPanel.tsx';
 import { ProgramBlueprintPanel } from './components/ProgramBlueprintPanel.tsx';
 import { QualityPanel } from './components/QualityPanel.tsx';
 import { RegulatoryPanel } from './components/RegulatoryPanel.tsx';
@@ -35,6 +36,7 @@ function Root() {
       {surface === 'safety' && <SafetyEscalationPanel onClose={() => setSurface(null)} />}
       {surface === 'regulatory' && <RegulatoryPanel onClose={() => setSurface(null)} />}
       {surface === 'quality' && <QualityPanel onClose={() => setSurface(null)} />}
+      {surface === 'personalization' && <PersonalizationPanel onClose={() => setSurface(null)} />}
       {surface === 'rules' && <DecisionRulesPanel onClose={() => setSurface(null)} />}
       {surface === 'requirements' && <RequirementsPanel onClose={() => setSurface(null)} />}
       {surface === 'ledger' && <ArchitectureLedger onClose={() => setSurface(null)} />}

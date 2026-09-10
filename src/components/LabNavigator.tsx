@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Boxes, BrainCircuit, ChevronRight, ClipboardCheck, FileText, FlaskConical, GitBranch, LayoutDashboard, Menu, Network, ShieldAlert, SlidersHorizontal, Sparkles, X, type LucideIcon } from "lucide-react";
+import { Boxes, BrainCircuit, ChevronRight, ClipboardCheck, FileText, FlaskConical, GitBranch, LayoutDashboard, Menu, Network, ShieldAlert, SlidersHorizontal, Sparkles, UserRoundCog, X, type LucideIcon } from "lucide-react";
 
 export type LabSurface =
   | "dashboard"
@@ -12,6 +12,7 @@ export type LabSurface =
   | "safety"
   | "regulatory"
   | "quality"
+  | "personalization"
   | "rules"
   | "requirements"
   | "ledger";
@@ -53,6 +54,13 @@ const groups: LabGroup[] = [
       ["safety", "Safety & Escalation", ShieldAlert],
       ["regulatory", "Regulatory Blueprint", Network],
       ["quality", "Quality Blueprint", ClipboardCheck],
+    ],
+  },
+  {
+    label: "OPERATE",
+    hint: "Translate approved design into a permitted experience",
+    items: [
+      ["personalization", "Personalization Blueprint", UserRoundCog],
     ],
   },
   {
