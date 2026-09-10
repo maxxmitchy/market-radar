@@ -9,6 +9,7 @@ import { EvidenceClaimsPanel } from './components/EvidenceClaimsPanel.tsx';
 import { FormulationBlueprintPanel } from './components/FormulationBlueprintPanel.tsx';
 import { LabDashboard } from './components/LabDashboard.tsx';
 import { ProgramBlueprintPanel } from './components/ProgramBlueprintPanel.tsx';
+import { RegulatoryPanel } from './components/RegulatoryPanel.tsx';
 import { RequirementsPanel } from './components/RequirementsPanel.tsx';
 import { SafetyEscalationPanel } from './components/SafetyEscalationPanel.tsx';
 import { StudentCheck } from './components/StudentCheck.tsx';
@@ -26,6 +27,7 @@ function Root() {
   const [showFormulationBlueprint, setShowFormulationBlueprint] = useState(false);
   const [showEvidenceClaims, setShowEvidenceClaims] = useState(false);
   const [showSafetyEscalation, setShowSafetyEscalation] = useState(false);
+  const [showRegulatory, setShowRegulatory] = useState(false);
 
   return (
     <>
@@ -38,6 +40,7 @@ function Root() {
         <button onClick={() => setShowFormulationBlueprint(true)} className="rounded-full border border-fuchsia-200 bg-fuchsia-50 px-4 py-3 text-xs font-black text-fuchsia-800 shadow-xl shadow-slate-900/10 transition hover:-translate-y-0.5 hover:border-fuchsia-300">Formulation Blueprint</button>
         <button onClick={() => setShowEvidenceClaims(true)} className="rounded-full border border-amber-200 bg-amber-50 px-4 py-3 text-xs font-black text-amber-800 shadow-xl shadow-slate-900/10 transition hover:-translate-y-0.5 hover:border-amber-300">Evidence & Claims</button>
         <button onClick={() => setShowSafetyEscalation(true)} className="rounded-full border border-rose-200 bg-rose-50 px-4 py-3 text-xs font-black text-rose-800 shadow-xl shadow-slate-900/10 transition hover:-translate-y-0.5 hover:border-rose-300">Safety & Escalation</button>
+        <button onClick={() => setShowRegulatory(true)} className="rounded-full border border-blue-200 bg-blue-50 px-4 py-3 text-xs font-black text-blue-800 shadow-xl shadow-slate-900/10 transition hover:-translate-y-0.5 hover:border-blue-300">Regulatory Blueprint</button>
         <button onClick={() => setShowRules(true)} className="rounded-full border border-violet-200 bg-violet-50 px-4 py-3 text-xs font-black text-violet-800 shadow-xl shadow-slate-900/10 transition hover:-translate-y-0.5 hover:border-violet-300">Decision Rules</button>
         <button onClick={() => setShowRequirements(true)} className="rounded-full border border-slate-200 bg-white px-4 py-3 text-xs font-black text-slate-900 shadow-xl shadow-slate-900/10 transition hover:-translate-y-0.5 hover:border-indigo-300">Product Requirements</button>
         <button onClick={() => setShowLedger(true)} className="rounded-full border border-slate-200 bg-white px-4 py-3 text-xs font-black text-slate-900 shadow-xl shadow-slate-900/10 transition hover:-translate-y-0.5 hover:border-indigo-300">Architecture Ledger</button>
@@ -50,6 +53,7 @@ function Root() {
       {showFormulationBlueprint && <FormulationBlueprintPanel onClose={() => setShowFormulationBlueprint(false)} />}
       {showEvidenceClaims && <EvidenceClaimsPanel onClose={() => setShowEvidenceClaims(false)} />}
       {showSafetyEscalation && <SafetyEscalationPanel onClose={() => setShowSafetyEscalation(false)} />}
+      {showRegulatory && <RegulatoryPanel onClose={() => setShowRegulatory(false)} />}
       {showRules && <DecisionRulesPanel onClose={() => setShowRules(false)} />}
       {showRequirements && <RequirementsPanel onClose={() => setShowRequirements(false)} />}
       {showLedger && <ArchitectureLedger onClose={() => setShowLedger(false)} />}
