@@ -1,6 +1,6 @@
 {
-  "name": "Careflux Student",
-  "description": "Affordable, pharmacist-curated daily wellness for Nigerian university students.",
+  "name": "Careflux Student — Product Architecture Lab",
+  "description": "Founder-facing product blueprint and prototype workspace for designing Careflux Student before physical and production implementation.",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

@@ -1,80 +1,117 @@
 import { useState } from "react";
-import { ArrowRight, Check, ChevronDown, Clock3, HeartPulse, Instagram, Menu, Package, ShieldCheck, ShoppingBag, Sparkles, Star, Stethoscope, Truck, Users, X, Zap } from "lucide-react";
+import { ArrowRight, Boxes, BrainCircuit, CheckCircle2, ChevronRight, CircleAlert, Database, FlaskConical, GitBranch, Layers3, LockKeyhole, Network, PanelTop, ShieldCheck, SlidersHorizontal, Sparkles, Stethoscope, Users, X } from "lucide-react";
 
-const programs = [
-  { days: 7, label: "TRY IT", price: "₦4,500", note: "Low commitment", featured: false },
-  { days: 14, label: "MOST POPULAR", price: "₦8,000", note: "The introductory program", featured: true },
-  { days: 30, label: "BEST VALUE", price: "₦15,000", note: "Built for the full month", featured: false },
+const architecture = [
+  { id: "check", label: "STUDENT CHECK", title: "Understand the student", icon: SlidersHorizontal, tone: "indigo", problem: "Turns student context into structured inputs instead of guessing from a product catalogue.", inputs: ["Academic stage", "Objective", "Timeline", "Routine & constraints"], decisions: ["Is there enough information to continue?", "Does the request require pharmacist review?"], outputs: ["Structured student profile", "Escalation / continue state"], not: "Not a diagnosis. Not a treatment decision. Not an ingredient recommender." },
+  { id: "program", label: "PROGRAM ENGINE", title: "Define the intervention", icon: GitBranch, tone: "violet", problem: "Maps a validated student context to a versioned program framework.", inputs: ["Student profile", "Approved objectives", "Program catalogue"], decisions: ["Which program version applies?", "Is the program approved?"], outputs: ["Program ID + version", "Eligibility state"], not: "Does not invent a formulation or bypass approval gates." },
+  { id: "formulation", label: "FORMULATION ENGINE", title: "Build the product", icon: FlaskConical, tone: "amber", problem: "Separates the commercial program from the underlying component set.", inputs: ["Program version", "Component set", "Dose rules", "Evidence package"], decisions: ["Which formulation version is valid?", "Are all governance gates satisfied?"], outputs: ["Formulation version", "Governance state"], not: "Ingredient stacks are not hard-coded into the decision engine." },
+  { id: "governance", label: "EVIDENCE • SAFETY • REGULATORY", title: "Control what can ship", icon: ShieldCheck, tone: "emerald", problem: "Creates explicit gates between an idea and a commercially usable formulation.", inputs: ["Evidence review", "Safety review", "Regulatory review", "Quality review"], decisions: ["Approved?", "Changes required?", "Rejected / archived?"], outputs: ["Governance decision", "Reviewer record"], not: "No commercial readiness without the required approvals." },
+  { id: "experience", label: "DAILY EXPERIENCE", title: "Turn the design into a routine", icon: Boxes, tone: "sky", problem: "Defines how an approved program becomes understandable for a student.", inputs: ["Approved program", "Instructions", "Education", "Pack rules"], decisions: ["What does the student see each day?", "What needs human intervention?"], outputs: ["Daily pack specification", "Education flow", "Feedback signals"], not: "This lab is not pretending to be the final consumer storefront." },
+  { id: "network", label: "CAMPUS NETWORK", title: "Learn from real use", icon: Users, tone: "rose", problem: "Connects students, pharmacists and campus operations into a learning system.", inputs: ["Student feedback", "Pharmacist feedback", "Campus signals", "Operational data"], decisions: ["What should change?", "What needs investigation?"], outputs: ["Product insights", "Content needs", "Operational requirements"], not: "Feedback informs design; it does not override clinical, safety or regulatory controls." },
 ];
 
-const dailyPack = [
-  { name: "Daily Essentials", detail: "Pharmacist-curated baseline support", icon: HeartPulse },
-  { name: "Study Support", detail: "Evidence-led nutritional support", icon: Zap },
-  { name: "Simple Routine", detail: "One clearly labelled daily pack", icon: Clock3 },
+const principles = [
+  ["01", "Architecture before interface", "The site describes the system we intend to build. It is not a mock storefront."],
+  ["02", "Rules before ingredients", "Programs and formulations are versioned objects with explicit governance."],
+  ["03", "Human control stays visible", "Pharmacist review and escalation are part of the architecture, not hidden edge cases."],
+  ["04", "Unknowns stay unknown", "Unvalidated pricing, formulations, claims and launch assumptions remain explicitly unresolved."],
 ];
 
 export default function App() {
-  const [days, setDays] = useState(14);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [showDetails, setShowDetails] = useState(false);
+  const [selected, setSelected] = useState(architecture[0]);
 
   return (
-    <div className="min-h-screen bg-[#fbfaf7] text-[#111827]">
-      <header className="sticky top-0 z-40 border-b border-black/5 bg-[#fbfaf7]/95 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
-          <a href="#top" className="flex items-center gap-2">
-            <div className="grid h-9 w-9 place-items-center rounded-xl bg-[#111827] text-white"><PlusMark /></div>
-            <div className="leading-none"><div className="text-sm font-black tracking-[.18em]">CAREFLUX</div><div className="text-[10px] font-bold tracking-[.25em] text-indigo-600">STUDENT</div></div>
-          </a>
-          <nav className="hidden items-center gap-8 text-sm font-semibold md:flex">
-            <a href="#how" className="hover:text-indigo-600">How it works</a>
-            <a href="#programs" className="hover:text-indigo-600">Programs</a>
-            <a href="#evidence" className="hover:text-indigo-600">Why Careflux</a>
-            <a href="#campus" className="hover:text-indigo-600">Campus</a>
-          </nav>
-          <button onClick={() => document.getElementById("programs")?.scrollIntoView({ behavior: "smooth" })} className="hidden rounded-full bg-[#111827] px-5 py-2.5 text-sm font-bold text-white hover:bg-indigo-700 sm:block">Get your days</button>
-          <button onClick={() => setMenuOpen(!menuOpen)} className="rounded-xl p-2 md:hidden" aria-label="Menu">{menuOpen ? <X /> : <Menu />}</button>
+    <div className="min-h-screen bg-[#f6f7fb] text-slate-950">
+      <header className="sticky top-0 z-40 border-b border-slate-200 bg-[#f6f7fb]/95 backdrop-blur">
+        <div className="mx-auto flex max-w-[1500px] items-center justify-between px-5 py-4 lg:px-8">
+          <div className="flex items-center gap-3">
+            <div className="grid h-10 w-10 place-items-center rounded-xl bg-slate-950 text-white"><PlusMark /></div>
+            <div><div className="text-sm font-black tracking-[.18em]">CAREFLUX</div><div className="text-[10px] font-bold tracking-[.22em] text-indigo-600">STUDENT / LAB</div></div>
+          </div>
+          <div className="hidden items-center gap-6 text-xs font-bold text-slate-500 md:flex"><span>PRODUCT BLUEPRINT</span><span>ARCHITECTURE</span><span>DECISION SYSTEM</span><span>GOVERNANCE</span></div>
+          <div className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-[10px] font-black tracking-[.14em] text-amber-700">DESIGN MODE</div>
         </div>
-        {menuOpen && <nav className="border-t border-black/5 px-5 py-4 md:hidden"><div className="grid gap-3 text-sm font-semibold"><a href="#how" onClick={() => setMenuOpen(false)}>How it works</a><a href="#programs" onClick={() => setMenuOpen(false)}>Programs</a><a href="#evidence" onClick={() => setMenuOpen(false)}>Why Careflux</a><a href="#campus" onClick={() => setMenuOpen(false)}>Campus</a></div></nav>}
       </header>
 
-      <main id="top">
-        <section className="overflow-hidden px-5 pb-16 pt-12 lg:px-8 lg:pb-24 lg:pt-20">
-          <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.05fr_.95fr]">
+      <main>
+        <section className="border-b border-slate-200 bg-white px-5 py-12 lg:px-8 lg:py-20">
+          <div className="mx-auto grid max-w-[1500px] gap-12 lg:grid-cols-[1.15fr_.85fr] lg:items-end">
             <div>
-              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1.5 text-xs font-bold text-indigo-700"><Sparkles size={14} /> BUILT FOR NIGERIAN STUDENTS</div>
-              <h1 className="max-w-3xl text-5xl font-black leading-[.98] tracking-[-.04em] sm:text-6xl lg:text-7xl">You don't need four bottles.<br /><span className="text-indigo-600">Buy the days you need.</span></h1>
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">Pharmacist-curated daily wellness packs designed around the reality of university life: tight budgets, busy schedules and no room for complicated routines.</p>
-              <div className="mt-8 flex flex-wrap gap-3"><button onClick={() => document.getElementById("programs")?.scrollIntoView({ behavior: "smooth" })} className="inline-flex items-center gap-2 rounded-full bg-[#111827] px-6 py-3.5 font-bold text-white shadow-lg shadow-slate-900/10 hover:bg-indigo-700">Choose your days <ArrowRight size={18} /></button><button onClick={() => setShowDetails(true)} className="rounded-full border border-slate-300 bg-white px-6 py-3.5 font-bold hover:border-slate-400">See what's inside</button></div>
-              <div className="mt-9 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-500"><span className="inline-flex items-center gap-2"><ShieldCheck size={17} className="text-emerald-600" /> Pharmacist-led</span><span className="inline-flex items-center gap-2"><Package size={17} className="text-indigo-600" /> Clearly labelled daily packs</span><span className="inline-flex items-center gap-2"><HeartPulse size={17} className="text-rose-500" /> Evidence first</span></div>
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1.5 text-[11px] font-black tracking-[.12em] text-indigo-700"><Sparkles size={14} /> PRODUCT ARCHITECTURE LAB</div>
+              <h1 className="max-w-5xl text-5xl font-black leading-[.95] tracking-[-.045em] sm:text-6xl lg:text-8xl">What exactly are we<br /><span className="text-indigo-600">building?</span></h1>
+              <p className="mt-7 max-w-3xl text-lg leading-8 text-slate-600">Careflux Student is being designed here before it becomes a website, an operating model or a physical product. This is the place to interrogate the idea, expose its rules, identify its unknowns and decide what needs to be built next.</p>
             </div>
+            <div className="rounded-[2rem] border border-slate-200 bg-slate-950 p-7 text-white shadow-xl shadow-slate-900/10">
+              <div className="flex items-center gap-3 text-indigo-300"><BrainCircuit size={20} /><span className="text-xs font-black tracking-[.16em]">THE DESIGN QUESTION</span></div>
+              <p className="mt-5 text-2xl font-black leading-tight">“Can we turn a student's situation into a safe, evidence-led, versioned program — and eventually deliver that program simply?”</p>
+              <div className="mt-6 grid grid-cols-2 gap-3 text-xs font-bold"><div className="rounded-xl bg-white/10 p-3">INPUT<br /><span className="font-normal text-slate-300">Student context</span></div><div className="rounded-xl bg-white/10 p-3">OUTPUT<br /><span className="font-normal text-slate-300">Approved program</span></div></div>
+            </div>
+          </div>
+        </section>
 
-            <div className="relative mx-auto w-full max-w-xl">
-              <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-indigo-100 blur-2xl" />
-              <div className="relative rounded-[2rem] border border-slate-200 bg-white p-5 shadow-2xl shadow-slate-900/10">
-                <div className="rounded-[1.5rem] bg-[#111827] p-6 text-white"><div className="flex items-center justify-between"><div><p className="text-xs font-bold uppercase tracking-[.2em] text-indigo-300">Your next</p><h2 className="mt-1 text-3xl font-black">14 days</h2></div><div className="rounded-2xl bg-white/10 p-3"><Package size={28} /></div></div><div className="mt-8 grid grid-cols-2 gap-3"><div className="rounded-2xl bg-white/10 p-4"><div className="text-xs text-white/60">Daily format</div><div className="mt-1 font-bold">1 labelled pack</div></div><div className="rounded-2xl bg-white/10 p-4"><div className="text-xs text-white/60">Routine</div><div className="mt-1 font-bold">OPEN → TAKE → CONTINUE</div></div></div></div>
-                <div className="grid gap-3 p-2 pt-5">{dailyPack.map(({ name, detail, icon: Icon }, i) => <div key={name} className="flex items-center gap-4 rounded-2xl bg-slate-50 p-4"><div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-white shadow-sm"><Icon size={20} className="text-indigo-600" /></div><div className="min-w-0"><div className="font-bold">{name}</div><div className="text-sm text-slate-500">{detail}</div></div><div className="ml-auto text-xs font-bold text-slate-300">DAY {String(i + 1).padStart(2, "0")}</div></div>)}</div>
+        <section className="px-5 py-10 lg:px-8 lg:py-14">
+          <div className="mx-auto max-w-[1500px]">
+            <div className="mb-7 flex items-end justify-between gap-5"><div><p className="text-[11px] font-black tracking-[.18em] text-indigo-600">SYSTEM MAP</p><h2 className="mt-2 text-3xl font-black tracking-tight">The product is a system, not a page.</h2></div><p className="hidden max-w-md text-right text-sm leading-6 text-slate-500 md:block">Click any node to inspect its purpose, inputs, decisions, outputs and boundaries.</p></div>
+            <div className="overflow-x-auto rounded-[2rem] border border-slate-200 bg-white p-4 shadow-sm lg:p-7">
+              <div className="min-w-[1080px]">
+                <div className="grid grid-cols-6 gap-3">
+                  {architecture.map((node, index) => {
+                    const Icon = node.icon;
+                    const active = selected.id === node.id;
+                    return <div key={node.id} className="relative">
+                      <button onClick={() => setSelected(node)} className={`group w-full rounded-2xl border p-4 text-left transition ${active ? "border-indigo-400 bg-indigo-50 shadow-md" : "border-slate-200 bg-slate-50 hover:border-slate-300 hover:bg-white"}`}>
+                        <div className="flex items-start justify-between"><div className="grid h-9 w-9 place-items-center rounded-xl bg-white text-indigo-600 shadow-sm"><Icon size={18} /></div><span className="text-[9px] font-black text-slate-300">0{index + 1}</span></div>
+                        <div className="mt-5 text-[10px] font-black tracking-[.12em] text-indigo-600">{node.label}</div>
+                        <div className="mt-1 text-sm font-black leading-tight">{node.title}</div>
+                      </button>
+                      {index < architecture.length - 1 && <ChevronRight className="absolute -right-3 top-1/2 z-10 hidden -translate-y-1/2 text-slate-300 lg:block" size={18} />}
+                    </div>;
+                  })}
+                </div>
+                <div className="mt-6 grid grid-cols-[1fr_auto_1fr] items-center gap-4 text-center text-[10px] font-black tracking-[.14em] text-slate-400"><div className="h-px bg-slate-200" /><span>FEEDBACK • VERSIONING • HUMAN REVIEW • LEARNING</span><div className="h-px bg-slate-200" /></div>
               </div>
             </div>
           </div>
         </section>
 
-        <section id="how" className="border-y border-black/5 bg-white px-5 py-16 lg:px-8"><div className="mx-auto max-w-7xl"><div className="max-w-2xl"><p className="text-xs font-black uppercase tracking-[.2em] text-indigo-600">The core experience</p><h2 className="mt-3 text-4xl font-black tracking-tight sm:text-5xl">Simple enough for the busiest student.</h2></div><div className="mt-10 grid gap-5 md:grid-cols-3">{[["01","Choose your days","Start with 7, 14 or 30 days. No need to commit to several full bottles."],["02","Receive your packs","Your order arrives as clearly identified daily packs, prepared through a pharmacist-led process."],["03","Take one day at a time","No juggling bottles. Find your day, follow the approved instructions and continue."]].map(([num,title,copy]) => <div key={num} className="rounded-3xl border border-slate-200 p-7"><div className="text-sm font-black text-indigo-600">{num}</div><h3 className="mt-8 text-xl font-black">{title}</h3><p className="mt-3 leading-7 text-slate-500">{copy}</p></div>)}</div></div></section>
+        <section className="px-5 pb-12 lg:px-8 lg:pb-16">
+          <div className="mx-auto grid max-w-[1500px] gap-5 lg:grid-cols-[.8fr_1.2fr]">
+            <div className="rounded-[2rem] border border-slate-200 bg-slate-950 p-7 text-white">
+              <div className="flex items-center gap-2 text-indigo-300"><PanelTop size={18} /><span className="text-[10px] font-black tracking-[.16em]">SELECTED NODE</span></div>
+              <div className="mt-5 text-xs font-black tracking-[.14em] text-indigo-300">{selected.label}</div>
+              <h2 className="mt-2 text-3xl font-black">{selected.title}</h2>
+              <p className="mt-4 leading-7 text-slate-300">{selected.problem}</p>
+              <div className="mt-7 flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 p-3 text-xs text-slate-300"><LockKeyhole size={15} /> Boundaries are part of the design.</div>
+            </div>
+            <div className="grid gap-5 sm:grid-cols-3">
+              <InspectCard title="INPUTS" icon={Database} items={selected.inputs} />
+              <InspectCard title="DECISIONS" icon={GitBranch} items={selected.decisions} />
+              <InspectCard title="OUTPUTS" icon={Network} items={selected.outputs} />
+              <div className="rounded-[1.5rem] border border-rose-200 bg-rose-50 p-6 sm:col-span-3"><div className="flex items-center gap-2 text-rose-700"><CircleAlert size={17} /><span className="text-[10px] font-black tracking-[.16em]">EXPLICITLY NOT DESIGNED TO DO</span></div><p className="mt-3 text-sm font-semibold leading-6 text-rose-900">{selected.not}</p></div>
+            </div>
+          </div>
+        </section>
 
-        <section id="programs" className="px-5 py-16 lg:px-8 lg:py-24"><div className="mx-auto max-w-7xl"><div className="flex flex-col justify-between gap-5 md:flex-row md:items-end"><div><p className="text-xs font-black uppercase tracking-[.2em] text-indigo-600">Pick your commitment</p><h2 className="mt-3 text-4xl font-black tracking-tight sm:text-5xl">Buy days, not bottles.</h2></div><p className="max-w-md text-sm leading-6 text-slate-500">Start small. Learn the experience. Come back when it works for you.</p></div><div className="mt-10 grid gap-5 md:grid-cols-3">{programs.map((program) => <button key={program.days} onClick={() => setDays(program.days)} className={`relative text-left rounded-[2rem] border p-7 transition hover:-translate-y-1 hover:shadow-xl ${days === program.days ? "border-indigo-500 bg-indigo-50 shadow-lg shadow-indigo-100" : "border-slate-200 bg-white"}`}>{program.featured && <span className="absolute -top-3 left-7 rounded-full bg-indigo-600 px-3 py-1 text-[10px] font-black tracking-wider text-white">MOST POPULAR</span>}<div className="flex items-start justify-between"><div><div className="text-5xl font-black tracking-tight">{program.days}<span className="ml-1 text-lg text-slate-400">days</span></div><p className="mt-2 text-sm font-semibold text-slate-500">{program.note}</p></div>{days === program.days ? <div className="grid h-8 w-8 place-items-center rounded-full bg-indigo-600 text-white"><Check size={17} /></div> : <ChevronDown className="text-slate-300" />}</div><div className="mt-10 border-t border-slate-200/80 pt-5"><div className="text-2xl font-black">{program.price}</div><div className="mt-1 text-xs font-semibold text-slate-400">Illustrative launch price — final pricing follows product and regulatory validation.</div></div></button>)}</div><div className="mt-7 rounded-3xl bg-[#111827] p-6 text-white sm:flex sm:items-center sm:justify-between"><div><p className="text-xs font-bold uppercase tracking-[.2em] text-indigo-300">Selected</p><p className="mt-1 text-xl font-black">Your {days}-day Careflux Student program</p></div><button onClick={() => setShowDetails(true)} className="mt-4 rounded-full bg-white px-5 py-3 text-sm font-black text-[#111827] sm:mt-0">Review pack <ArrowRight size={16} className="ml-1 inline" /></button></div></div></section>
+        <section className="border-y border-slate-200 bg-white px-5 py-14 lg:px-8 lg:py-18">
+          <div className="mx-auto max-w-[1500px]"><div className="max-w-2xl"><p className="text-[11px] font-black tracking-[.18em] text-indigo-600">DESIGN RULES</p><h2 className="mt-2 text-4xl font-black tracking-tight">Things we should not lose while building.</h2></div><div className="mt-9 grid gap-4 md:grid-cols-2 lg:grid-cols-4">{principles.map(([num, title, copy]) => <div key={num} className="rounded-[1.5rem] border border-slate-200 p-6"><div className="text-xs font-black text-indigo-600">{num}</div><h3 className="mt-8 text-lg font-black">{title}</h3><p className="mt-3 text-sm leading-6 text-slate-500">{copy}</p></div>)}</div></div>
+        </section>
 
-        <section id="evidence" className="bg-[#eef2ff] px-5 py-16 lg:px-8"><div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[.9fr_1.1fr] lg:items-center"><div><p className="text-xs font-black uppercase tracking-[.2em] text-indigo-600">Not a brain pill</p><h2 className="mt-3 text-4xl font-black tracking-tight sm:text-5xl">Evidence first.<br />Marketing second.</h2><p className="mt-5 max-w-xl leading-7 text-slate-600">Careflux Student will not promise to make you smarter, cure stress or replace sleep, food or medical care. Every formulation is intended to go through structured review before commercial launch.</p><button onClick={() => setShowDetails(true)} className="mt-7 inline-flex items-center gap-2 font-bold text-indigo-700">What does pharmacist-curated mean? <ArrowRight size={17} /></button></div><div className="grid gap-3 sm:grid-cols-2">{["Evidence","Dose","Safety & interactions","Contraindications","Duplication","Student suitability","Product quality","Regulatory requirements"].map((item) => <div key={item} className="flex items-center gap-3 rounded-2xl border border-indigo-100 bg-white p-4 font-bold"><div className="grid h-8 w-8 place-items-center rounded-lg bg-indigo-50 text-indigo-600"><Check size={16} /></div>{item}</div>)}</div></div></section>
-
-        <section id="campus" className="px-5 py-16 lg:px-8 lg:py-24"><div className="mx-auto max-w-7xl rounded-[2rem] bg-[#111827] p-8 text-white sm:p-12"><div className="grid gap-12 lg:grid-cols-[1fr_auto] lg:items-center"><div><p className="text-xs font-black uppercase tracking-[.2em] text-indigo-300">Careflux Student Campus</p><h2 className="mt-3 max-w-2xl text-4xl font-black tracking-tight sm:text-5xl">Your campus. Your people. Your health.</h2><p className="mt-5 max-w-2xl leading-7 text-slate-300">Student representatives will help us understand what students actually need, create useful campus content and make Careflux easier to access.</p><div className="mt-7 flex flex-wrap gap-3 text-sm font-bold"><span className="rounded-full bg-white/10 px-4 py-2">UNILAG</span><span className="rounded-full bg-white/10 px-4 py-2">LASU</span><span className="rounded-full bg-white/10 px-4 py-2">OAU</span><span className="rounded-full bg-white/10 px-4 py-2">UNIBEN</span><span className="rounded-full bg-white/10 px-4 py-2">UI</span><span className="rounded-full bg-white/10 px-4 py-2">UNN</span></div></div><div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1"><CampusStat icon={Users} label="Student reps" /><CampusStat icon={Truck} label="Campus delivery" /><CampusStat icon={Stethoscope} label="Pharmacist education" /></div></div></div></section>
-
-        <section className="border-t border-black/5 bg-white px-5 py-14 lg:px-8"><div className="mx-auto max-w-7xl"><div className="grid gap-10 md:grid-cols-3"><div><div className="flex items-center gap-2"><div className="grid h-9 w-9 place-items-center rounded-xl bg-[#111827] text-white"><PlusMark /></div><span className="font-black tracking-[.15em]">CAREFLUX STUDENT</span></div><p className="mt-4 max-w-sm text-sm leading-6 text-slate-500">Affordable, convenient, pharmacist-curated daily wellness for Nigerian university students.</p></div><div><h3 className="font-black">The promise</h3><p className="mt-3 text-sm leading-6 text-slate-500">Clinical integrity. Regulatory compliance. Product quality. Honest marketing. Affordability.</p></div><div><h3 className="font-black">One sentence</h3><p className="mt-3 text-sm leading-6 text-slate-500">Your health. Your campus. Your day.</p></div></div><div className="mt-12 flex flex-col gap-3 border-t border-slate-100 pt-6 text-xs text-slate-400 sm:flex-row sm:items-center sm:justify-between"><span>© 2026 Careflux Student</span><span>Product formulations and final launch model subject to applicable Nigerian regulatory review.</span></div></div></section>
+        <section className="px-5 py-14 lg:px-8 lg:py-20"><div className="mx-auto max-w-[1500px] rounded-[2rem] border border-slate-200 bg-[#eef2ff] p-7 sm:p-10"><div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-center"><div><p className="text-[11px] font-black tracking-[.18em] text-indigo-600">NEXT BUILD SURFACE</p><h2 className="mt-2 text-3xl font-black">From architecture → executable product.</h2><p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600">The next layers should make each node editable and testable: requirements, rules, data contracts, governance records, prototype flows and eventually the operational interfaces that people will actually use.</p></div><div className="grid gap-2 text-xs font-bold sm:grid-cols-2 lg:w-[420px]"><BuildItem text="Requirements registry" /><BuildItem text="Decision-rule editor" /><BuildItem text="Program versioning" /><BuildItem text="Governance workspace" /><BuildItem text="Prototype simulator" /><BuildItem text="Operational surfaces" /></div></div></div></section>
       </main>
 
-      {showDetails && <DetailsModal onClose={() => setShowDetails(false)} />}
+      <footer className="border-t border-slate-200 bg-white px-5 py-8 lg:px-8"><div className="mx-auto flex max-w-[1500px] flex-col justify-between gap-3 text-xs text-slate-400 sm:flex-row"><span className="font-bold">Careflux Student — Product Architecture Lab</span><span>Design artifact. Not a consumer storefront. Unvalidated assumptions remain uncommitted.</span></div></footer>
     </div>
   );
 }
 
-function CampusStat({ icon: Icon, label }: { icon: typeof Users; label: string }) { return <div className="flex items-center gap-3 rounded-2xl bg-white/10 p-4"><Icon size={20} className="text-indigo-300" /><span className="text-sm font-bold">{label}</span></div>; }
-function PlusMark() { return <span className="text-xl font-black">+</span>; }
-function DetailsModal({ onClose }: { onClose: () => void }) { return <div className="fixed inset-0 z-50 grid place-items-center bg-slate-950/50 p-5 backdrop-blur-sm" onMouseDown={(e) => e.target === e.currentTarget && onClose()}><div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-[2rem] bg-white p-7 shadow-2xl"><div className="flex items-start justify-between"><div><p className="text-xs font-black uppercase tracking-[.2em] text-indigo-600">Inside Careflux Student</p><h2 className="mt-2 text-2xl font-black">Designed around one daily moment.</h2></div><button onClick={onClose} className="rounded-xl p-2 hover:bg-slate-100" aria-label="Close"><X size={20} /></button></div><div className="mt-6 grid gap-3">{["Every daily pack is clearly identified and traceable.","Instructions, warnings, storage, batch/lot and expiry information will follow the applicable framework.","Formulations are reviewed for evidence, dose, safety, interactions and student suitability.","No ingredient enters simply because it sells.","The goal is convenience without compromising professional standards."].map((text) => <div key={text} className="flex gap-3 rounded-2xl bg-slate-50 p-4 text-sm leading-6 text-slate-600"><Check size={18} className="mt-1 shrink-0 text-emerald-600" />{text}</div>)}</div><button onClick={onClose} className="mt-7 w-full rounded-full bg-[#111827] py-3.5 font-bold text-white">Got it</button></div></div>; }
+function InspectCard({ title, icon: Icon, items }: { title: string; icon: typeof Database; items: string[] }) {
+  return <div className="rounded-[1.5rem] border border-slate-200 bg-white p-6"><div className="flex items-center gap-2 text-slate-400"><Icon size={16} /><span className="text-[10px] font-black tracking-[.16em]">{title}</span></div><div className="mt-5 space-y-3">{items.map(item => <div key={item} className="flex gap-2 text-sm font-semibold leading-5"><CheckCircle2 size={16} className="mt-0.5 shrink-0 text-indigo-500" />{item}</div>)}</div></div>;
+}
+
+function BuildItem({ text }: { text: string }) {
+  return <div className="flex items-center gap-2 rounded-xl border border-indigo-100 bg-white px-3 py-2.5"><span className="h-1.5 w-1.5 rounded-full bg-indigo-500" />{text}</div>;
+}
+
+function PlusMark() {
+  return <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="3"><path d="M12 5v14M5 12h14" /></svg>;
+}
