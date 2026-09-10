@@ -8,6 +8,7 @@ import { DecisionRulesPanel } from './components/DecisionRulesPanel.tsx';
 import { DecisionSimulator } from './components/DecisionSimulator.tsx';
 import { EducationPanel } from './components/EducationPanel.tsx';
 import { EvidenceClaimsPanel } from './components/EvidenceClaimsPanel.tsx';
+import { FeedbackPanel } from './components/FeedbackPanel.tsx';
 import { FormulationBlueprintPanel } from './components/FormulationBlueprintPanel.tsx';
 import { FulfillmentPanel } from './components/FulfillmentPanel.tsx';
 import { LabDashboard } from './components/LabDashboard.tsx';
@@ -43,6 +44,7 @@ function Root() {
       {surface === 'fulfillment' && <FulfillmentPanel onClose={() => setSurface(null)} />}
       {surface === 'education' && <EducationPanel onClose={() => setSurface(null)} />}
       {surface === 'campus' && <CampusPanel onClose={() => setSurface(null)} />}
+      {surface === 'feedback' && <FeedbackPanel onClose={() => setSurface(null)} />}
       {surface === 'rules' && <DecisionRulesPanel onClose={() => setSurface(null)} />}
       {surface === 'requirements' && <RequirementsPanel onClose={() => setSurface(null)} />}
       {surface === 'ledger' && <ArchitectureLedger onClose={() => setSurface(null)} />}
