@@ -1,0 +1,1 @@
+The registry is a provisional architecture artifact. It must not be interpreted as a regulatory determination, approval, or legal advice.
