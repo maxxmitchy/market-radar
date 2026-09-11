@@ -1,8 +1,7 @@
-import { useState } from "react";
-import { Boxes, BrainCircuit, Building2, ChevronRight, ClipboardCheck, FileBox, FileText, FlaskConical, GitBranch, GraduationCap, Hammer, LayoutDashboard, Menu, MessageSquare, Network, PackageCheck, ShieldAlert, SlidersHorizontal, Sparkles, UserRoundCog, X, type LucideIcon } from "lucide-react";
+import { Boxes, BrainCircuit, Building2, ChevronRight, ClipboardCheck, FileBox, FileText, FlaskConical, GitBranch, GraduationCap, Hammer, LayoutDashboard, Menu, MessageSquare, Network, PackageCheck, ShieldAlert, SlidersHorizontal, Sparkles, UserRoundCog, UsersRound, X, type LucideIcon } from "lucide-react";
 
 export type LabSurface =
-  | "dashboard" | "simulator" | "student-check" | "program" | "daily" | "formulation" | "evidence" | "safety" | "regulatory" | "quality" | "personalization" | "pack-generation" | "fulfillment" | "education" | "campus" | "feedback" | "pilot" | "product-specification" | "rules" | "requirements" | "ledger";
+  | "dashboard" | "simulator" | "student-check" | "program" | "daily" | "formulation" | "evidence" | "safety" | "regulatory" | "quality" | "personalization" | "pack-generation" | "fulfillment" | "education" | "campus" | "feedback" | "pilot" | "physical-pilot" | "product-specification" | "rules" | "requirements" | "ledger";
 interface LabNavigatorProps { onOpen: (surface: LabSurface) => void; }
 interface LabGroup { label: string; hint: string; items: Array<[LabSurface, string, LucideIcon]>; }
 const groups: LabGroup[] = [
@@ -10,7 +9,7 @@ const groups: LabGroup[] = [
   { label: "DEFINE", hint: "Shape the product", items: [["program", "Program Blueprint", GitBranch], ["daily", "Daily Experience", Boxes], ["formulation", "Formulation Blueprint", FlaskConical]] },
   { label: "CONTROL", hint: "Decide what can proceed", items: [["evidence", "Evidence & Claims", FileText], ["safety", "Safety & Escalation", ShieldAlert], ["regulatory", "Regulatory Blueprint", Network], ["quality", "Quality Blueprint", ClipboardCheck]] },
   { label: "OPERATE", hint: "Translate approved design into a permitted experience", items: [["personalization", "Personalization Blueprint", UserRoundCog], ["pack-generation", "Pack Generation Blueprint", FileBox], ["fulfillment", "Fulfillment Blueprint", PackageCheck], ["education", "Education Blueprint", GraduationCap], ["campus", "Campus Blueprint", Building2], ["feedback", "Feedback Blueprint", MessageSquare]] },
-  { label: "PROVE", hint: "Test the designed system before scaling", items: [["pilot", "Pilot Blueprint", ClipboardCheck]] },
+  { label: "PROVE", hint: "Test the designed system before scaling", items: [["pilot", "Pilot Blueprint", ClipboardCheck], ["physical-pilot", "Physical Pilot Specification", UsersRound]] },
   { label: "BUILD", hint: "Translate the approved architecture into buildable artifacts", items: [["product-specification", "Product Specification", Hammer]] },
   { label: "BUILD THE SYSTEM", hint: "Keep the architecture coherent", items: [["rules", "Decision Rules", Sparkles], ["requirements", "Product Requirements", FileText], ["ledger", "Architecture Ledger", Network]] },
 ];
