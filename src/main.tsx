@@ -18,6 +18,7 @@ import { PersonalizationPanel } from './components/PersonalizationPanel.tsx';
 import { PhysicalPilotPanel } from './components/PhysicalPilotPanel.tsx';
 import { PilotPanel } from './components/PilotPanel.tsx';
 import { ProductSpecificationPanel } from './components/ProductSpecificationPanel.tsx';
+import { ProductionPlatformPanel } from './components/ProductionPlatformPanel.tsx';
 import { ProgramBlueprintPanel } from './components/ProgramBlueprintPanel.tsx';
 import { QualityPanel } from './components/QualityPanel.tsx';
 import { RegulatoryPanel } from './components/RegulatoryPanel.tsx';
@@ -48,6 +49,7 @@ function Root() {
     {surface === 'pilot' && <PilotPanel onClose={() => setSurface(null)} />}
     {surface === 'physical-pilot' && <PhysicalPilotPanel onClose={() => setSurface(null)} />}
     {surface === 'product-specification' && <ProductSpecificationPanel onClose={() => setSurface(null)} />}
+    {surface === 'production-platform' && <ProductionPlatformPanel onClose={() => setSurface(null)} />}
     {surface === 'rules' && <DecisionRulesPanel onClose={() => setSurface(null)} />}
     {surface === 'requirements' && <RequirementsPanel onClose={() => setSurface(null)} />}
     {surface === 'ledger' && <ArchitectureLedger onClose={() => setSurface(null)} />}
